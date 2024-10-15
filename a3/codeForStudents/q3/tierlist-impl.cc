@@ -1,5 +1,6 @@
 module tierlist;
 import <utility>;
+import <algorithm>;
 
 void TierList::swap(TierList &other) {
   std::swap(tiers, other.tiers);
