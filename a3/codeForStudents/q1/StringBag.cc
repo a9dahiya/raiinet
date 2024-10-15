@@ -90,7 +90,6 @@ struct StringBag::Node {
     Node (const string & s, size_t arity, Node* next);
 };
 
-// Overloaded operator
 ostream& operator<<(ostream &out, const StringBag &sb) {
     StringBag::Node* cur = sb.first;
     out << "{ ";
