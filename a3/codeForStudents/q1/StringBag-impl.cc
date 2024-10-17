@@ -1,4 +1,4 @@
-import stringBag;
+module stringBag;
 import <iostream>;
 import <string>;
 import <utility>;
