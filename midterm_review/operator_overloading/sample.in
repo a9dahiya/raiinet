@@ -1,0 +1,11 @@
+c 0 Charizard 45 f
+c 1 Quaquaval 45 w
+c 2 UW-Goose 100 g
+c 3 Blastoise 45 w
+p 0
+p 1
+p 2
+= 0 1
+= 2 0
+= 2 1
+= 1 3

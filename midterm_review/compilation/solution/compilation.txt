@@ -1,0 +1,7 @@
+g++20h iostream compare string
+g++20 Pokemon.cc -c
+g++20 Pokemon-impl.cc -c
+g++20 PokemonTrainer.cc -c
+g++20 PokemonTrainer-impl.cc -c
+g++20 main.cc -c
+g++20 *.o -o exc

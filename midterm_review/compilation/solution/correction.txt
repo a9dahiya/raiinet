@@ -1,0 +1,7 @@
+Pokemon.cc: line 1, 6, and 12 should have "export" at the beginning
+            
+Pokemon-impl.cc: line 1 should remove "export"
+
+PokemonTrainer.cc: should import Pokemon
+
+main.cc: line 2, 3 should remove <> around the user-defined modules
