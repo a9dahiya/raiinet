@@ -1,0 +1,4 @@
+addtext 0 9 0 9
+addgraphics 10 20 10 20
+filledbox 5 15 5 15 B
+render
