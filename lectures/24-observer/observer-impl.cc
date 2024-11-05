@@ -1,0 +1,4 @@
+module observer;
+
+Observer::~Observer() {}
+
