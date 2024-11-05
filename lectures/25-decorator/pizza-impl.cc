@@ -1,0 +1,3 @@
+module pizza;
+
+Pizza::~Pizza() {}
