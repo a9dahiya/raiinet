@@ -11,15 +11,18 @@ class Link;
 class Ability;
 
 class Player {
-public:
-    void downloadLink(std::shared_ptr<Link> link);
 
-private:
     string name;
     vector<shared_ptr<Link>> myLinks;
     vector<shared_ptr<Ability>> Abilities;
     int downloadedData;
     int downloadedVirus;
+
+public:
+    void downloadLink(std::shared_ptr<Link> link);
+    vector<shared_ptr<Link>> getAllLinks();
+    Player(string name, vector<shared_ptr<Link>> myLinks, vector<shared_ptr<Ability>> Abilities,
+     int downloadedData, int downloadedVirus);
 };
 
 #endif // PLAYER_H
