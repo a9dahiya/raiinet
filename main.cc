@@ -1,8 +1,28 @@
-import <iostream>;
+#include "Player.h"
+#include "Subject.h"
+#include "GameState.h"
+#include "Observer.h"
 
-int main() {
-    std::cout << "LETS GO KEATS WAY" << std::endl;
-    std::cout << "KEATS WAY ON TOP ONG lol" << std::endl;
-    std::cout << "KEATS WAY ON TOP TYPE SHI" << std::endl;
-    std::cout << "This is to see if git push is working" << std::endl;
+
+int main(int argc, char** argv) {
+    // Initializing Players and GameState
+    int x = 0;
+    bool graphics = false;
+    while(x < argc){
+        // 
+        string arg = argv[x];
+        if(arg == "-graphics" ){
+            graphics = true;
+        }else if(arg == ""){
+            iji
+        }
+
+        x++;
+    }
+
+    if(graphics){
+        GraphicObserver* = new(graphic)
+    }else{
+        
+    }
 }
