@@ -13,6 +13,7 @@ public:
 
 private:
     std::shared_ptr<Link> targetLink;
+    // YASHILA IS OVER HERE AND DISHAS BD IS HERE AND SHE DIDNT INVITE HER WHAT DO U WANNA 
 };
 
 #endif // DOWNLOAD_H
