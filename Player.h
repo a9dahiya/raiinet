@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <Link.h>
-using namespace std
+using namespace std;
 
 class Link;
 class Ability;

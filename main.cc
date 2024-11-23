@@ -6,6 +6,7 @@
 #include "TextObserver.h"
 #include <memory>
 #include <vector>
+using namespace std;
 
 int main(int argc, char** argv) {
     // Initializing Players and GameState
@@ -27,12 +28,12 @@ int main(int argc, char** argv) {
         x++;
     }
     
-    shared_ptr<GameState> game
+    shared_ptr<GameState> game;
     if(setGraphics){
-        shared_ptr<GraphicalObserver> GraphicalObs= new(GraphicalObserver{});
-        GameState->attach(GraphicalObs);
+        shared_ptr<GraphicalObserver> graphicDisplay= make_shared<GraphicalObserver>(game);
+        game->attach(graphicDisplay);
     }else{
-        shared_ptr<TextObserver> TextObs= new(TextObserver);
-        GameState->attach(TextObs);
+        shared_ptr<TextObserver> textDisplay= new(TextObserver);
+        game->attach(textDisplay);
     }
 }
