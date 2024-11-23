@@ -3,6 +3,10 @@
 
 #include <memory>
 #include <vector>
+#include <string>
+#include <Link.h>
+using namespace std
+
 class Link;
 class Ability;
 
@@ -11,8 +15,9 @@ public:
     void downloadLink(std::shared_ptr<Link> link);
 
 private:
-    std::vector<std::shared_ptr<Link>> myLinks;
-    std::vector<std::shared_ptr<Ability>> Abilities;
+    string name;
+    vector<shared_ptr<Link>> myLinks;
+    vector<shared_ptr<Ability>> Abilities;
     int downloadedData;
     int downloadedVirus;
 };
