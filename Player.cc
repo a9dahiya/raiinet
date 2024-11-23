@@ -1,4 +1,4 @@
-#include "player.h"
+#include "Player.h"
 
 Player::Player(string name, vector<shared_ptr<Link>> myLinks, vector<shared_ptr<Ability>> Abilities,
      int downloadedData, int downloadedVirus, int abilitiesLeft) 
