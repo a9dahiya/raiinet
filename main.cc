@@ -15,14 +15,19 @@ using namespace std;
 vector<shared_ptr<Link>> setupLinks(shared_ptr<Player> player, string File, char index){
     // 
     ifstream f{File};
+    vector<Link> links;
+    
     string token;
-    bool isVirus = false;
+    bool isData = false;
+
     while(f >> token){
-        if(token[0] = 'V'){
-            bool isVirus = true;
+        if(token[0] = 'd' || token[0] = 'D'){
+            bool isData = true;
         }
         int strength = token[1];
-        player->addLink()
+        shared_ptr<Link> link = make_shared<Link>(player, token, index, isData, strength);
+        links.emplace_back(link);
+        index++;
     }
 }
 
@@ -59,8 +64,12 @@ int main(int argc, char* args[]) {
             setGraphics = true;
         }else if(arg == "-ability1"){
             // Adding Abilities for Player 1
+            Ability1 = true;
+            x++;
         }else if(arg == "-ability2"){
             // Adding Abilities for Player 2
+            Ability1 = true;
+            x++;
         }
 
         x++;
