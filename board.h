@@ -4,24 +4,25 @@
 #include <vector>
 #include <memory>
 #include <iostream>
-
-class Cell;
-class Link;
-class Player;
-class Position;
+#include "Cell.h"
+#include "link.h"
+#include "Player.h"
+#include "Position.h"
 
 class Board {
 public:
+    Board(int width, int height);
+
     std::shared_ptr<Cell> getCell(Position pos);
     void moveLink(Position from, Position to);
-    void addLink(std::shared_ptr<Link> Link, Position pos);
-    void removeLink(std::shared_ptr<Link> Link, Position pos);
+    void addLink(std::shared_ptr<Link> link, Position pos);
+    void removeLink(std::shared_ptr<Link> link, Position pos);
     bool ValidMove(Position from, Position to, std::shared_ptr<Player> player);
     bool hasOppLink(Position pos, std::shared_ptr<Player> player);
     bool isOppServer(Position pos, std::shared_ptr<Player> player);
     bool offEdge(Position pos, std::shared_ptr<Player> player);
-    int getHeight();
-    int getWidth();
+    int getHeight() const;
+    int getWidth() const;
 
     friend std::ostream& operator<<(std::ostream& out, const Board& board);
 
@@ -31,4 +32,4 @@ private:
     std::vector<std::vector<std::shared_ptr<Cell>>> board;
 };
 
-#endif 
+#endif

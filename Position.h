@@ -5,6 +5,7 @@ class Direction;
 
 class Position {
 public:
+    Position(int row , int col);
     int getRow();
     int getCol();
     bool operator==(const Position& other);
