@@ -19,3 +19,23 @@ vector<shared_ptr<Ability>> Player::getAbilities(){
 string Player::getName(){
     return name;
 }
+
+int Player::numAbilityLeft(){
+    return abilitiesLeft;
+}
+
+void Player::incrementData(){
+    downloadedData++;
+}
+
+void Player::incrementVirus(){
+    downloadedVirus++;
+}
+
+int Player::getData(){
+    return downloadedData;
+}
+
+int Player::getVirus(){
+    return downloadedVirus;
+}
