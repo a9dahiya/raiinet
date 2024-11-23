@@ -2,6 +2,8 @@
 #include "Cell.h"
 #include "board.h"
 
+
+
 Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::vector<std::shared_ptr<Cell>>(width, nullptr)) {
     serverPorts = {
         Position(0, width / 2 - 1),
@@ -16,32 +18,43 @@ Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::
         }
     }
 
-    for (size_t playerIdx = 0; playerIdx < players.size(); ++playerIdx) {
-        auto player = players[playerIdx];
+    for (size_t index = 0; index < players.size(); ++index) {
+        auto player = players[index];
         auto links = player->getAllLinks();
 
-        int mainRow = (playerIdx == 0) ? 0 : height - 1;
-        int altRow = (playerIdx == 0) ? 1 : height - 2;
+        int portrow = (index == 0) ? height - 1 : 0;
+        int belowrow = (index == 0) ? height - 2 : 1;
 
-        int linkIdx = 0;
+        int linkindex = 0;
         for (int x = 0; x < width; ++x) {
-            Position currentPos(mainRow, x);
+            Position currentPos(portrow, x);
             bool isServerPort = false;
 
-            for (const auto& port : serverPorts) {
-                if (port == currentPos) {
+            for (size_t i = 0; i < serverPorts.size(); ++i) {
+                if (serverPorts[i] == currentPos) {
                     isServerPort = true;
                     break;
                 }
             }
 
             if (isServerPort) {
-                board[altRow][x]->setLink(links[linkIdx++]);
+                board[belowrow][x]->setLink(links[linkindex]);
+                linkindex++;
             } else {
-                board[mainRow][x]->setLink(links[linkIdx++]);
+                board[portrow][x]->setLink(links[linkindex++]);
+                linkindex++;
             }
 
-            if (linkIdx >= links.size()) break;
+            if (linkindex >= links.size()) {
+                break;
+            }
         }
     }
+}
+
+bool Board::hasOppLink(Position pos, std::shared_ptr<Player> player) {
+   
+    auto cell = board[pos.getY()][pos.getX()];
+    
+    return cell->getLink() && !player->isOwnLink(cell->getLink());
 }

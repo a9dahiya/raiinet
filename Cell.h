@@ -16,11 +16,14 @@ public:
     void setFirewall();
     void removeFirewall();
     bool isFirewall();
+    bool isServerPort();
+    
 
 private:
     Position pos;
     std::shared_ptr<Link> link;
     bool isFirewall;
+    bool serverPort;
 };
 
 #endif

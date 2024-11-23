@@ -11,8 +11,7 @@
 
 class Board {
 public:
-    Board(int width, int height);
-
+    Board(std::vector<std::shared_ptr<Player>> players);
     std::shared_ptr<Cell> getCell(Position pos);
     void moveLink(Position from, Position to);
     void addLink(std::shared_ptr<Link> link, Position pos);
@@ -27,9 +26,11 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const Board& board);
 
 private:
-    int width;
-    int height;
+    int width = 8;
+    int height = 8;
     std::vector<std::vector<std::shared_ptr<Cell>>> board;
+    std::vector<Position> serverPorts;
+
 };
 
 #endif
