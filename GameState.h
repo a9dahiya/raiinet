@@ -8,7 +8,7 @@
 class Player;
 class Board;
 
-class GameState {
+class GameState : public Subject {
 public:
     bool HasWon();
     void NextTurn();
