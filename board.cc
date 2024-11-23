@@ -9,7 +9,7 @@ Board::Board(Player* player1, Player* player2) {
 
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            board[y][x] = std::make_shared<Cell>(Position{x, y}, nullptr); // Initialize with no owner for now
+            board[y][x] = std::make_shared<Cell>(Position{x, y}, nullptr); 
         }
     }
 
