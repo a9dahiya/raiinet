@@ -3,9 +3,7 @@
 Player::Player(string name, vector<shared_ptr<Link>> myLinks, vector<shared_ptr<Ability>> Abilities,
      int downloadedData, int downloadedVirus, int abilitiesLeft) 
      : name{name}, myLinks{myLinks}, Abilities{Abilities}, downloadedData{downloadedData}, downloadedVirus{downloadedVirus},
-     abilitiesLeft{abilitiesLeft} {
-            
-     } //implement fully
+     abilitiesLeft{abilitiesLeft} {}
 
 
 vector<shared_ptr<Link>> Player::getAllLinks(){
@@ -24,18 +22,36 @@ int Player::numAbilityLeft(){
     return abilitiesLeft;
 }
 
-void Player::incrementData(){
-    downloadedData++;
-}
-
-void Player::incrementVirus(){
-    downloadedVirus++;
-}
-
 int Player::getData(){
     return downloadedData;
 }
 
 int Player::getVirus(){
     return downloadedVirus;
+}
+
+void Player::downloadLink(std::shared_ptr<Link> link){
+    if (link->getIsData()){
+        downloadedData++;
+    }
+    else{
+        downloadedVirus++;
+    }
+}
+
+shared_ptr<Link> Player::getLink(char id){
+    for (auto i : myLinks){
+        if (id == i->getName()){
+            return i;
+        }
+    }
+}
+
+bool Player::isOwnLink(shared_ptr<Link> link){
+    for (auto i : myLinks){
+        if (i == link){
+            return true;
+        }
+    }
+    return false;
 }

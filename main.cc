@@ -15,13 +15,13 @@ using namespace std;
 vector<shared_ptr<Link>> setupLinks(shared_ptr<Player> player, string File, char index){
     // 
     ifstream f{File};
-    vector<Link> links;
+    vector<shared_ptr<Link>> links;
     
     string token;
     bool isData = false;
 
     while(f >> token){
-        if(token[0] = 'd' || token[0] = 'D'){
+        if(token[0] == 'd' || token[0] == 'D'){
             bool isData = true;
         }
         int strength = token[1];
@@ -44,6 +44,12 @@ int main(int argc, char* args[]) {
     bool Ability1 = false;
     bool Ability2 = false;
 
+    // Initializing Variables :
+    vector<shared_ptr<Link>> p1_links;
+    vector<shared_ptr<Link>> p2_links;
+    vector<shared_ptr<Ability>> p1_abilities;
+    vector<shared_ptr<Ability>> p2_abilities
+
     // Checking for Command Line Arguments 
     while(x < argc){
         string arg = args[x];
@@ -52,21 +58,22 @@ int main(int argc, char* args[]) {
             Link1order = true;
             x++;
             char ascii = 'a';
-            vector<shared_ptr<Link>> p1_links = setuplinks(P1, args[x], ascii);
-        }else if(arg == "-link2"){
+            p1_links = setuplinks(P1, args[x], ascii);
+        }elseif(arg == "-link2"){
             // Add Order for Link for Player 2
             Link2order = true;
             x++;
             char ascii = 'A';
-            vector<shared_ptr<Link>> p2_links = setuplinks(P2, args[x], ascii);
-        }else if(arg == "-graphics" ){
+            p2_links = setuplinks(P2, args[x], ascii);
+        }elseif(arg == "-graphics" ){
             // Enabling Graphical Observer
             setGraphics = true;
-        }else if(arg == "-ability1"){
+        }elseif(arg == "-ability1"){
             // Adding Abilities for Player 1
             Ability1 = true;
             x++;
-        }else if(arg == "-ability2"){
+            p1_abilities = setupAbility(P1);
+        }elseif(arg == "-ability2"){
             // Adding Abilities for Player 2
             Ability1 = true;
             x++;
@@ -75,6 +82,18 @@ int main(int argc, char* args[]) {
         x++;
     }
     
+    abilityOrder = "LFDSP"
+    if(!Ability1){
+        for(int x = 0; x < 5; ++x){
+            p1_abilities[x] = make_shared<Ability>(abilityOrder[x],x,P1);
+        }
+    }
+    if(!Ability2){
+        for(int x = 0; x < 5; ++x){
+            p1_abilities[x] = make_shared<Ability>(abilityOrder[x],x,P1);
+        }
+    }
+
     // Create Array of players
     vector<shared_ptr<Player>> players;
     players.emplace_back(P1);
@@ -91,4 +110,12 @@ int main(int argc, char* args[]) {
     }
 
     // GAME LOOP
+    while(cin >> command){
+        if(command == "move"){
+            char link;
+            string direction;
+            
+            game->moveLink()
+        }
+    }
 }
