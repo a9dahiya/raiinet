@@ -58,3 +58,40 @@ bool Board::hasOppLink(Position pos, std::shared_ptr<Player> player) {
     
     return cell->getLink() && !player->isOwnLink(cell->getLink());
 }
+
+void Board::tatake(std::shared_ptr<Link> attacker, std::shared_ptr<Link> defender) {
+    attacker->setRevealed();
+    defender->setRevealed();
+
+    bool attackerIsBattleGod = attacker->getIsBattleGod();
+    bool defenderIsBattleGod = defender->getIsBattleGod();
+    std::shared_ptr<Link> loser;
+    std::shared_ptr<Link> winner;
+
+    if (attackerIsBattleGod) {
+        loser = defender;
+        winner = attacker;
+    } else if (defenderIsBattleGod) {
+        loser = attacker;
+        winner = defender;
+    } else {
+        int attackerStrength = attacker->getStrength();
+        int defenderStrength = defender->getStrength();
+
+        if (attackerStrength > defenderStrength) {
+            loser = defender;
+            winner = attacker;
+        } else if (attackerStrength < defenderStrength) {
+            loser = attacker;
+            winner = defender;
+        } else {
+            loser = defender;
+            winner = attacker;
+        }
+    }
+
+    winner->getOwner()->downloadLink(loser);
+
+    Position loserPos = loser->getPos();
+    removeLink(loser, loserPos);
+}
