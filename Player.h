@@ -21,8 +21,15 @@ class Player {
 public:
     void downloadLink(std::shared_ptr<Link> link);
     vector<shared_ptr<Link>> getAllLinks();
+    vector<shared_ptr<Ability>> getAbilities();
     string getName();
     Link getLink(char id);
+    vector<shared_ptr<Links>> getAllLinks();
+    int numAbilityLeft();
+    void incrementData();
+    void incrementVirus();
+    int getData(); //is this num
+    int getVirus();
 
     Player(string name, vector<shared_ptr<Link>> myLinks, vector<shared_ptr<Ability>> Abilities,
      int downloadedData = 0, int downloadedVirus = 0, int abilitiesLeft = 5);
