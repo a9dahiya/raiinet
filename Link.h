@@ -14,6 +14,7 @@ public:
     int getStrength();
     bool getIsData();
     Position getPos();
+    Position getNewPos(Position, from);
     void switchType();
     bool getLinkBoost();
     void setLinkBoost();
