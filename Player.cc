@@ -1,9 +1,9 @@
 #include "Player.h"
 
 Player::Player(string name, vector<shared_ptr<Link>> myLinks, vector<shared_ptr<Ability>> Abilities,
-     int downloadedData, int downloadedVirus, int abilitiesLeft) 
+     int downloadedData, int downloadedVirus, int abilitiesLeft, vector<Position> serverPorts) 
      : name{name}, myLinks{myLinks}, Abilities{Abilities}, downloadedData{downloadedData}, downloadedVirus{downloadedVirus},
-     abilitiesLeft{abilitiesLeft} {}
+     abilitiesLeft{abilitiesLeft}, vector<Position> serverPorts{serverPorts} {}
 
 
 vector<shared_ptr<Link>> Player::getAllLinks(){
@@ -54,4 +54,8 @@ bool Player::isOwnLink(shared_ptr<Link> link){
         }
     }
     return false;
+}
+
+void Player::setServerPort(Position pos){
+    serverPorts.emplace_back(pos);
 }

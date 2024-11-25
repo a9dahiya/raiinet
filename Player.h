@@ -17,6 +17,7 @@ class Player {
     int downloadedData;
     int downloadedVirus;
     int abilitiesLeft;
+    vector<Position> serverPorts;
 
 public:
     void downloadLink(shared_ptr<Link> link);
@@ -29,9 +30,10 @@ public:
     int getData(); //is this num
     int getVirus();
     bool isOwnLink(shared_ptr<Link> link);
+    void setServerPort(Position pos);
 
     Player(string name, vector<shared_ptr<Link>> myLinks, vector<shared_ptr<Ability>> Abilities,
-     int downloadedData = 0, int downloadedVirus = 0, int abilitiesLeft = 5);
+     int downloadedData = 0, int downloadedVirus = 0, int abilitiesLeft = 5, vector<Position> serverPorts = nullptr);
 };
 
 #endif // PLAYER_H
