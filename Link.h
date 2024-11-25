@@ -9,6 +9,16 @@ class Player;
 class Position;
 
 class Link {
+    std::shared_ptr<Player> Owner;
+    bool isData;
+    int strength;
+    bool BattleGod;
+    char name;
+    bool hasLinkBoost;
+    Position position;
+    bool revealed;
+    bool Downloaded;
+
 public:
     std::shared_ptr<Player> getOwner();
     int getStrength();
@@ -18,23 +28,14 @@ public:
     void switchType();
     bool getLinkBoost();
     void setLinkBoost();
-    bool getIsBattleGod();
+    bool isBattleGod();
     void setBattleGod();
     char getName();
-    bool IsRevealed();
-    bool IsDownloaded();
+    bool isRevealed();
+    bool isDownloaded();
     void setRevealed();
-
-private:
-    std::shared_ptr<Player> Owner;
-    bool isData;
-    int strength;
-    bool isBattleGod;
-    char name;
-    bool hasLinkBoost;
-    Position position;
-    bool revealed;
-    bool Downloaded;
+    bool operator==(shared_ptr<Link> other);
+    
 };
 
 #endif 
