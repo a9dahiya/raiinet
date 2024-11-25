@@ -109,10 +109,10 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
     if(offEdge(from, game->GetCurrentPlayer())){
         game->GetCurrentPlayer()->downloadLink(link);
     }else if( isOppServer(game->GetCurrentPlayer()) ){
-        game->GetOtherPlayer()->downloadLink(link);
+        game->GetNextPlayer()->downloadLink(link);
     }else if(hasOppLink(to, game->GetCurrentPlayer()) ){
         shared_ptr<Link> defender = cellTo->getLink();
-        shared_ptr<Link> winner = tatake(Link, defender);
+        shared_ptr<Link> winner = tatake(link, defender);
         cellFrom->removeLink();
         cellTo->setLink(winner);
         winner->setPos(to);

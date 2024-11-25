@@ -13,8 +13,12 @@
 #include <fstream>
 using namespace std;
 
+vector<shared_ptr<Ability>> setupAbility(shared_ptr<Player> player){
+    // Helper to initialize Abilities
+}
+
 vector<shared_ptr<Link>> setupLinks(shared_ptr<Player> player, string File, char index){
-    // 
+    // Helper to initialize Links
     ifstream f{File};
     vector<shared_ptr<Link>> links;
     
@@ -73,11 +77,12 @@ int main(int argc, char* args[]) {
             // Adding Abilities for Player 1
             Ability1 = true;
             x++;
-            // p1_abilities = setupAbility(P1);
+            p1_abilities = setupAbility(P1);
         }else if(arg == "-ability2"){
             // Adding Abilities for Player 2
             Ability1 = true;
             x++;
+            p2_abilities = setupAbility(P2);
         }
 
         x++;
@@ -142,6 +147,8 @@ int main(int argc, char* args[]) {
                     cout << endl;
                 }
             }
+        }else if(command == "sequence"){
+            
         }
     }
 }

@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <board.h>
 
 class Player;
 class Board;
@@ -19,8 +20,9 @@ public:
     bool HasWon();
     void NextTurn();
     std::shared_ptr<Player> GetCurrentPlayer();
-    std::shared_ptr<Player> GetOtherPlayer();
+    std::shared_ptr<Player> GetNextPlayer();
     shared_ptr<Board> GetBoard();
+    bool isAbilityUsed();
     void ExecuteAbility(int AbilityId, istream& in);
     void moveLink(char linkId, const std::string& Dir);
     void setWinner(std::shared_ptr<Player>);

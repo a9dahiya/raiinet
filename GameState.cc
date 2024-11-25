@@ -5,7 +5,26 @@
 #include <Player.h>
 #include <Link.h>
 #include <string>
+#include <Ability.h>
+#include <Firewall.h>
+#include <Position.h>
 using namespace std;
+
+bool GameState::isAbilityUsed(){
+    return abilityUsed;
+}
+
+void GameState::NextTurn(){
+    PlayerTurn = (PlayerTurn + 1) % (players.size());
+    abilityUsed = false;
+}
+
+shared_ptr<Player> GameState::GetCurrentPlayer(){
+    return players[PlayerTurn];
+}
+shared_ptr<Player> GameState::GetNextPlayer(){
+    return players[PlayerTurn + 1];
+}
 
 void GameState::moveLink(char linkId, const string& Dir){
     shared_ptr<Player> player = GetCurrentPlayer();
@@ -17,10 +36,31 @@ void GameState::moveLink(char linkId, const string& Dir){
     }
     Position from = link->getPos();
     Position to = from.getnewPos(from, Dir, dist);
-    if(!(GetBoard()->validMove(from, to, player))){
+    if(!(GetBoard()->ValidMove(from, to, player))){
         //ur mom type shi
     }
     
     GetBoard()->moveLink(link, from, to, this);
     
+}
+
+void GameState::ExecuteAbility(int AbilityId, istream& in){
+    if(isAbilityUsed()){
+        // Ability already used in turn
+    }else{
+        shared_ptr<Player> player = GetCurrentPlayer();
+        vector<shared_ptr<Ability>> abilities = player->getAbilities();
+        if( !(abilities[AbilityId]->isUsed()) ){
+            string name = abilities[AbilityId]->getName();
+            if(name == "Firewall"){
+                int row, col;
+                in >> row >> col;
+                Position pos{row, col};
+                shared_ptr<Cell> cell = GetBoard()->getCell(pos);
+                shared_ptr<Firewall> firewall = make_shared<Firewall>(abilities[AbilityId], cell);
+                firewall->execute();
+            }
+            abilityUsed == true;
+        }
+    }
 }
