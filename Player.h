@@ -33,6 +33,7 @@ public:
     bool isOwnServerPort(Position pos);
     void addLink(shared_ptr<Link> link);
     void addAbility(shared_ptr<Ability> ability);
+    bool operator!= (shared_ptr<Player> other);
 
     Player(string name);
 };

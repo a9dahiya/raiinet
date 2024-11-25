@@ -74,3 +74,7 @@ void Player::addAbility(shared_ptr<Ability> ability){
     Abilities.emplace_back(ability);
     abilitiesLeft++;
 }
+
+bool Player::operator!=(shared_ptr<Player> other){
+    return (name != other->getName());
+}
