@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include "Position.h"
+using namespace std;
 
 class Player;
 class Position;
@@ -12,14 +13,15 @@ class Link {
     std::shared_ptr<Player> Owner;
     bool isData;
     int strength;
-    bool BattleGod;
-    char name;
-    bool hasLinkBoost;
+    bool BattleGod = false;
+    char letter;
+    std::string name;
+    bool hasLinkBoost = false;
     Position position;
-    bool revealed;
-    bool Downloaded;
+    bool revealed = false;
 
 public:
+    Link(std::shared_ptr<Player> Owner, char letter, string name, bool isData, int strength);
     std::shared_ptr<Player> getOwner();
     int getStrength();
     bool getIsData();
@@ -30,9 +32,9 @@ public:
     void setLinkBoost();
     bool isBattleGod();
     void setBattleGod();
-    char getName();
+    string getName();
+    char getletter();
     bool isRevealed();
-    bool isDownloaded();
     void setRevealed();
     bool operator==(shared_ptr<Link> other);
     void setPos(Position pos);
