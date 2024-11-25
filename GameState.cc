@@ -35,7 +35,7 @@ void GameState::moveLink(char linkId, const string& Dir){
         dist = 2;
     }
     Position from = link->getPos();
-    Position to = from.getnewPos(from, Dir, dist);
+    Position to = link->getNewPos(Dir, dist);
     if(!(GetBoard()->ValidMove(from, to, player))){
         //ur mom type shi
     }
@@ -59,6 +59,8 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 shared_ptr<Cell> cell = GetBoard()->getCell(pos);
                 shared_ptr<Firewall> firewall = make_shared<Firewall>(abilities[AbilityId], cell);
                 firewall->execute();
+            }else if(name == "Polarize"){
+                char link;
             }
             abilityUsed == true;
         }

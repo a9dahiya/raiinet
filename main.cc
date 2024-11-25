@@ -13,15 +13,40 @@
 #include <fstream>
 using namespace std;
 
-vector<shared_ptr<Ability>> setupAbility(shared_ptr<Player> player){
+vector<shared_ptr<Ability>> setupAbility(shared_ptr<Player> player, string abilities){
     // Helper to initialize Abilities
+    for (int x = 0; x < 5; ++x){
+        if(abilities[x] == 'F'){
+            shared_ptr<Ability> ability= make_shared<Ability>("Firewall", x, player);
+            player->addAbility(ability);
+        }else if(abilities[x] == 'S'){
+            shared_ptr<Ability> ability= make_shared<Ability>("Scan", x, player);
+            player->addAbility(ability);
+        }else if(abilities[x] == 'L'){
+            shared_ptr<Ability> ability= make_shared<Ability>("Link boost", x, player);
+            player->addAbility(ability);
+        }else if(abilities[x] == 'D'){
+            shared_ptr<Ability> ability= make_shared<Ability>("Download", x, player);
+            player->addAbility(ability);
+        }else if(abilities[x] == 'P'){
+            shared_ptr<Ability> ability= make_shared<Ability>("Polarize", x, player);
+            player->addAbility(ability);
+        }else if(abilities[x] == 'U'){
+            shared_ptr<Ability> ability= make_shared<Ability>("Unlimited Void", x, player);
+            player->addAbility(ability);
+        }else if(abilities[x] == 'R'){
+            shared_ptr<Ability> ability= make_shared<Ability>("Russian Roulette", x, player);
+            player->addAbility(ability);
+        }else if(abilities[x] == 'B'){
+            shared_ptr<Ability> ability= make_shared<Ability>("Battle God", x, player);
+            player->addAbility(ability);
+        }
+    }
 }
 
-vector<shared_ptr<Link>> setupLinks(shared_ptr<Player> player, string File, char index){
+void setupLinks(shared_ptr<Player> player, string File, char index){
     // Helper to initialize Links
     ifstream f{File};
-    vector<shared_ptr<Link>> links;
-    
     string token;
     bool isData = false;
 
@@ -30,8 +55,8 @@ vector<shared_ptr<Link>> setupLinks(shared_ptr<Player> player, string File, char
             bool isData = true;
         }
         int strength = token[1];
-        shared_ptr<Link> link = make_shared<Link>(player, token, index, isData, strength);
-        links.emplace_back(link);
+        shared_ptr<Link> link = make_shared<Link>(player, index, token, isData, strength);
+        player->addLink(link);
         index++;
     }
 }
@@ -49,12 +74,6 @@ int main(int argc, char* args[]) {
     bool Ability1 = false;
     bool Ability2 = false;
 
-    // Initializing Variables :
-    vector<shared_ptr<Link>> p1_links;
-    vector<shared_ptr<Link>> p2_links;
-    vector<shared_ptr<Ability>> p1_abilities;
-    vector<shared_ptr<Ability>> p2_abilities;
-
     // Checking for Command Line Arguments 
     while(x < argc){
         string arg = args[x];
@@ -62,14 +81,16 @@ int main(int argc, char* args[]) {
             // Add Order for Link for Player 1
             Link1order = true;
             x++;
+            arg = args[x];
             char ascii = 'a';
-            p1_links = setupLinks(P1, args[x], ascii);
+            setupLinks(P1, arg, ascii);
         }else if(arg == "-link2"){
             // Add Order for Link for Player 2
             Link2order = true;
             x++;
+            arg = args[x];
             char ascii = 'A';
-            p2_links = setupLinks(P2, args[x], ascii);
+            setupLinks(P2, arg, ascii);
         }else if(arg == "-graphics" ){
             // Enabling Graphical Observer
             setGraphics = true;
@@ -77,26 +98,31 @@ int main(int argc, char* args[]) {
             // Adding Abilities for Player 1
             Ability1 = true;
             x++;
-            p1_abilities = setupAbility(P1);
+            arg = args[x];
+            setupAbility(P1, arg);
         }else if(arg == "-ability2"){
             // Adding Abilities for Player 2
             Ability1 = true;
             x++;
-            p2_abilities = setupAbility(P2);
+            arg = args[x];
+            setupAbility(P2, arg);
         }
 
         x++;
     }
     
+    // Setting default 5 abilities if not chosen
     string abilityOrder = "LFDSP";
     if(!Ability1){
         for(int x = 0; x < 5; ++x){
-            p1_abilities[x] = make_shared<Ability>(abilityOrder[x],x,P1);
+            shared_ptr<Ability> ability= make_shared<Ability>(abilityOrder[x],x,P1);
+            p1->addAbility(ability);
         }
     }
     if(!Ability2){
         for(int x = 0; x < 5; ++x){
-            p1_abilities[x] = make_shared<Ability>(abilityOrder[x],x,P1);
+            shared_ptr<Ability> ability= make_shared<Ability>(abilityOrder[x],x,P2);
+            p2->addAbility(ability);
         }
     }
 
