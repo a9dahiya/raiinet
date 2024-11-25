@@ -21,9 +21,6 @@ void GameState::moveLink(char linkId, const string& Dir){
         //ur mom type shi
     }
     
-    GetBoard()->moveLink(link, from, to);
+    GetBoard()->moveLink(link, from, to, this);
     
-    if( GetBoard()->hasOppLink(to, player) ){
-        GetBoard()->tatake();
-    }
 }

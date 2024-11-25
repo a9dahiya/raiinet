@@ -1,8 +1,8 @@
 #include "Position.h"
 #include "Cell.h"
 #include "board.h"
-
-
+#include "GameState.h"
+using namespace std;
 
 Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::vector<std::shared_ptr<Cell>>(width, nullptr)) {
     serverPorts = {
@@ -97,15 +97,24 @@ void Board::tatake(std::shared_ptr<Link> attacker, std::shared_ptr<Link> defende
 }
 
 
-void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to) {
+void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, shared_ptr<GameState> game) {
     if (!link) return;
 
-    auto cellFrom = getCell(from);
-    auto cellTo = getCell(to);
+    shared_ptr<Cell> cellFrom = getCell(from);
+    shared_ptr<Cell> cellTo = getCell(to);
+    
+    if(offEdge(from, game->GetCurrentPlayer())){
+        game->GetCurrentPlayer()->downloadLink(link);
+    }else if( isOppServer(game->GetCurrentPlayer()) ){
+        game->GetOtherPlayer()->downloadLink(link);
+    }else if(cellTo->getLink){
+        gam
+    }else {
+        cellFrom->removeLink();
+        cellTo->setLink(link);
+        link->setPos(to);
+    }
 
-    cellFrom->removeLink();
-    cellTo->setLink(link);
-    link->setPos(to);
 }
 
 std::shared_ptr<Cell> Board::getCell(Position pos) {

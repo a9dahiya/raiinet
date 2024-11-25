@@ -59,21 +59,21 @@ int main(int argc, char* args[]) {
             x++;
             char ascii = 'a';
             p1_links = setuplinks(P1, args[x], ascii);
-        }elseif(arg == "-link2"){
+        }else if(arg == "-link2"){
             // Add Order for Link for Player 2
             Link2order = true;
             x++;
             char ascii = 'A';
             p2_links = setuplinks(P2, args[x], ascii);
-        }elseif(arg == "-graphics" ){
+        }else if(arg == "-graphics" ){
             // Enabling Graphical Observer
             setGraphics = true;
-        }elseif(arg == "-ability1"){
+        }else if(arg == "-ability1"){
             // Adding Abilities for Player 1
             Ability1 = true;
             x++;
             p1_abilities = setupAbility(P1);
-        }elseif(arg == "-ability2"){
+        }else if(arg == "-ability2"){
             // Adding Abilities for Player 2
             Ability1 = true;
             x++;
@@ -114,8 +114,9 @@ int main(int argc, char* args[]) {
         if(command == "move"){
             char link;
             string direction;
-            
-            game->moveLink()
+            if(cin >> link >> direction){
+                game->moveLink(link, direction)
+            }
         }
     }
 }

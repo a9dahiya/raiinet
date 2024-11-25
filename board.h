@@ -14,6 +14,7 @@ public:
     Board(std::vector<std::shared_ptr<Player>> players);
     std::shared_ptr<Cell> getCell(Position pos);
     void moveLink(Position from, Position to);
+    void setLink(Link link, Position target);
     void removeLink(Position pos);
     bool ValidMove(Position from, Position to, std::shared_ptr<Player> player);
     bool hasOppLink(Position pos, std::shared_ptr<Player> player);

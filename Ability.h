@@ -20,7 +20,7 @@ private:
     std::string name;
     int id;
     std::shared_ptr<Link> Owner;
-    bool used;
+    bool used = false;
 };
 
 #endif // ABILITY_H
