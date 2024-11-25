@@ -7,7 +7,6 @@
 #include <Link.h>
 using namespace std;
 
-class Link;
 class Ability;
 
 class Player {
