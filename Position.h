@@ -1,7 +1,7 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-class Direction;
+using namespace std;
 
 class Position {
     int row;
