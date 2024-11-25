@@ -8,8 +8,8 @@ int Link::getStrength(){
     return strength;
 }
 
-bool Link::getIsData(){
-    return isData;
+bool Link::isData(){
+    return Data;
 }
 
  Position Link::getPos(){
@@ -17,7 +17,7 @@ bool Link::getIsData(){
  }
 
  void Link::switchType(){
-    isData = !isData;
+    Data = !Data;
  }
 
  bool Link::getLinkBoost(){
@@ -36,17 +36,17 @@ bool Link::getIsData(){
     BattleGod = true;
  }
 
- char Link::getName(){
+ string Link::getName(){
     return name;
  }
+
+char Link::getLetter(){
+    return letter;
+}
 
  bool Link::isRevealed(){
     return revealed;
  }
- 
-bool Link::isDownloaded(){
-    return Downloaded;
-}
 
 void Link::setRevealed(){
     revealed = true;
@@ -62,5 +62,20 @@ bool Link::operator==(shared_ptr<Link> other){
     }
     else{
         return true;
+    }
+}
+
+Position Link::getNewPos(string dir, int dist){
+    if (dir == "up"){
+        return Position{position.getRow() - dist, position.getCol()};
+    }
+    if (dir == "down"){
+        return Position{position.getRow() + dist, position.getCol()};
+    }
+    if (dir == "left"){
+        return Position{position.getRow(), position.getCol() - dist};
+    }
+    if (dir == "right"){
+        return Position{position.getRow(), position.getCol() + dist};
     }
 }
