@@ -4,16 +4,15 @@
 class Direction;
 
 class Position {
+    int row;
+    int col;
+
 public:
     Position(int row , int col);
     int getRow();
     int getCol();
     bool operator==(const Position& other) const;
-    Position operator+(const Direction& dir);
-
-private:
-    int row;
-    int col;
+    Position operator+(const string& dir);
 };
 
 #endif 
