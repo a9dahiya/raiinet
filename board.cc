@@ -14,7 +14,8 @@ Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::
 
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            board[y][x] = std::make_shared<Cell>(Position{x, y}, nullptr);
+            board[y][x] = std::make_shared<Cell>(Position{x, y}, nullptr); 
+            //meoww hahah
         }
     }
 
@@ -59,12 +60,12 @@ bool Board::hasOppLink(Position pos, std::shared_ptr<Player> player) {
     return cell->getLink() && !player->isOwnLink(cell->getLink());
 }
 
-void Board::tatake(std::shared_ptr<Link> attacker, std::shared_ptr<Link> defender) {
+std::shared_ptr<Link> Board::tatake(std::shared_ptr<Link> attacker, std::shared_ptr<Link> defender) {
     attacker->setRevealed();
     defender->setRevealed();
 
-    bool attackerIsBattleGod = attacker->getIsBattleGod();
-    bool defenderIsBattleGod = defender->getIsBattleGod();
+    bool attackerIsBattleGod = attacker->isBattleGod();
+    bool defenderIsBattleGod = defender->isBattleGod();
     std::shared_ptr<Link> loser;
     std::shared_ptr<Link> winner;
 
@@ -94,6 +95,8 @@ void Board::tatake(std::shared_ptr<Link> attacker, std::shared_ptr<Link> defende
 
     Position loserPos = loser->getPos();
     removeLink(loserPos);
+
+    return winner;
 }
 
 

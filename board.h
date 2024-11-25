@@ -22,7 +22,7 @@ public:
     bool offEdge(Position pos, std::shared_ptr<Player> player);
     int getHeight() const;
     int getWidth() const;
-    void tatake(std::shared_ptr<Link> attacker, std::shared_ptr<Link> defender);
+    std::shared_ptr<Link> tatake(std::shared_ptr<Link> attacker, std::shared_ptr<Link> defender);
     void moveLink(std::shared_ptr<Link> link, Position from, Position to);
 
 private:
