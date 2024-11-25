@@ -22,7 +22,7 @@ public:
 private:
     Position pos;
     std::shared_ptr<Link> link;
-    bool isFirewall;
+    bool Firewall;
     bool serverPort;
 };
 
