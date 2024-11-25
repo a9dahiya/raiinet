@@ -35,6 +35,7 @@ public:
     bool isDownloaded();
     void setRevealed();
     bool operator==(shared_ptr<Link> other);
+    void setPos(Position pos);
     
 };
 

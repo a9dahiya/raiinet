@@ -51,3 +51,16 @@ bool Link::isDownloaded(){
 void Link::setRevealed(){
     revealed = true;
 }
+
+void Link::setPos(Position pos){
+    position = pos;
+}
+
+bool Link::operator==(shared_ptr<Link> other){
+    if (getName() != other->getName() || getOwner() != other->getOwner()){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
