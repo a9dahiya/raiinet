@@ -12,6 +12,12 @@ Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::
         Position(height - 1, width / 2)
     };
 
+    players[0]->setServerPort(serverPorts[0]);  
+    players[0]->setServerPort(serverPorts[1]); 
+    players[1]->setServerPort(serverPorts[2]); 
+    players[1]->setServerPort(serverPorts[3]);   
+
+
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             board[y][x] = std::make_shared<Cell>(Position{x, y}, nullptr); 
@@ -136,4 +142,65 @@ void Board::removeLink(Position pos) {
     } else {
         // shoot the error out daddy
     }
+}
+
+int Board::getHeight() const {
+    return height;
+}
+
+int Board::getWidth() const {
+    return width;
+}
+
+bool Board::offEdge(Position pos, std::shared_ptr<Player> player) {
+    int row = pos.getRow();
+    int col = pos.getCol();
+
+    if (player->getName() == "Player2" && row < 0) {
+        return true;
+    } else if (player->getName() == "Player1" && row >= height) {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+bool Board::isOppServer(Position pos, std::shared_ptr<Player> player) {
+    for (const auto& serverPort : serverPorts) {
+        if (pos == serverPort && !player->isOwnServerPort(pos)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Board::ValidMove(Position from, Position to, std::shared_ptr<Player> player) {
+    if (to.getCol() < 0 || to.getCol() >= width || to.getRow() < 0 || to.getRow() >= height) {
+        return false;
+    }
+
+    if (offEdge(to, player)) {
+        return false;
+    }
+
+    if (player->isOwnServerPort(to)) {
+        return false;
+    }
+
+    auto fromCell = getCell(from);
+    auto link = fromCell->getLink();
+    if (!link || !player->isOwnLink(link)) {
+        return false;
+    }
+
+    auto toCell = getCell(to);
+    auto targetLink = toCell->getLink();
+    if (targetLink && player->isOwnLink(targetLink)) {
+        return false;
+    }
+
+    return true;
 }
