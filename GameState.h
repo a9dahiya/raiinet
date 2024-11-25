@@ -11,10 +11,11 @@ class Board;
 class GameState : public Subject {
     std::vector<std::shared_ptr<Player>> players;
     std::shared_ptr<Board> board;
-    bool GameOver;
-    int PlayerTurn;
-    bool abilityUsed;
+    bool GameOver = false;
+    int PlayerTurn = 0;
+    bool abilityUsed = false;
 public:
+    GameState(const vector<std::shared_ptr<Player>>& players);
     bool HasWon();
     void NextTurn();
     std::shared_ptr<Player> GetCurrentPlayer();
