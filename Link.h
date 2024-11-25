@@ -10,7 +10,7 @@ class Player;
 class Position;
 
 class Link {
-    std::shared_ptr<Player> Owner;
+    shared_ptr<Player> Owner;
     bool Data;
     int strength;
     bool BattleGod = false;
@@ -21,8 +21,8 @@ class Link {
     bool revealed = false;
 
 public:
-    Link(std::shared_ptr<Player> Owner, char letter, string name, bool isData, int strength);
-    std::shared_ptr<Player> getOwner();
+    Link(shared_ptr<Player> Owner, char letter, string name, bool Data, int strength);
+    shared_ptr<Player> getOwner();
     int getStrength();
     bool isData();
     Position getPos();

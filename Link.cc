@@ -1,5 +1,8 @@
 #include "Link.h"
 
+Link::Link(std::shared_ptr<Player> Owner, char letter, string name, bool Data, int strength)
+: Owner{Owner}, letter{letter}, name{name}, Data{Data}, strength{strength} {}
+
 std::shared_ptr<Player> Link::getOwner(){
     return Owner;
 }
