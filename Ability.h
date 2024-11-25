@@ -10,6 +10,7 @@ class Link;
 
 class Ability {
 public:
+    Ability(string name, int id, shared_ptr<Player> Owner);
     virtual void execute(Game* game, const std::vector<std::string>& param);
     bool isUsed();
     void setUsed();

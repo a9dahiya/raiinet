@@ -3,8 +3,8 @@
 
 #include <vector>
 #include <memory>
-
-class Observer;
+#include "Observer.h"
+using namespace std;
 
 class Subject {
 public:

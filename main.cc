@@ -116,13 +116,13 @@ int main(int argc, char* args[]) {
     if(!Ability1){
         for(int x = 0; x < 5; ++x){
             shared_ptr<Ability> ability= make_shared<Ability>(abilityOrder[x],x,P1);
-            p1->addAbility(ability);
+            P1->addAbility(ability);
         }
     }
     if(!Ability2){
         for(int x = 0; x < 5; ++x){
             shared_ptr<Ability> ability= make_shared<Ability>(abilityOrder[x],x,P2);
-            p2->addAbility(ability);
+            P2->addAbility(ability);
         }
     }
 
@@ -150,7 +150,7 @@ int main(int argc, char* args[]) {
             char link;
             string direction;
             if(cin >> link >> direction){
-                game->moveLink(link, direction)
+                game->moveLink(link, direction);
             }
         }else if (command == "ability"){
             // Use an Ability

@@ -9,7 +9,7 @@ class Player;
 
 class TextObserver : public Observer {
 public:
-    void notify(Subject* whoFrom) override;
+    void notify() override;
 
 private:
     std::shared_ptr<GameState> subject;

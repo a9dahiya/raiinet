@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include <board.h>
+#include "board.h"
 
 class Player;
 class Board;
