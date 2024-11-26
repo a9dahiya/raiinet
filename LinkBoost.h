@@ -4,14 +4,14 @@
 #include <memory>
 #include <vector>
 #include "Ability.h"
-#include "Cell.h"
+#include "Link.h"
 using namespace std;
 
 class LinkBoost : public Ability {
     std::shared_ptr<Link> targetLink;
     public:
     void execute(shared_ptr<GameState> game) override;
-    LinkBoost(shared_ptr<Ability> ability, shared_ptr<Cell> cell);
+    LinkBoost(shared_ptr<Ability> ability, shared_ptr<Link> link);
 };
 
 #endif // LINKBOOST_H

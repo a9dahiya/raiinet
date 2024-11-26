@@ -1,10 +1,11 @@
 #ifndef RUSSIAN_ROULETTE_H
 #define RUSSIAN_ROULETTE_H
 
-#include <memory> 
+#include <memory>
 #include "Ability.h"
-#include "GameState.h"
 #include "Link.h"
+
+using namespace std;
 
 class RussianRoulette : public Ability {
     std::shared_ptr<Link> targetLink; 
