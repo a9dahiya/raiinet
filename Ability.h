@@ -3,12 +3,11 @@
 
 #include <memory>
 #include <string>
-#include <vector>
-#include "Player.h"
-#include "GameState.h"
 
 using namespace std;
 
+class Player;
+class GameState;
 
 class Ability {
     string name;
