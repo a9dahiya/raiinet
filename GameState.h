@@ -13,6 +13,7 @@ class Board;
 class GameState : public Subject {
     std::vector<std::shared_ptr<Player>> players;
     std::shared_ptr<Board> board;
+    std::shared_ptr<Player> winner = nullptr;
     bool GameOver = false;
     int PlayerTurn = 0;
     bool abilityUsed = false;
@@ -26,8 +27,8 @@ public:
     bool isAbilityUsed();
     void ExecuteAbility(int AbilityId, istream& in);
     void moveLink(char linkId, const std::string& Dir);
-    void setWinner(std::shared_ptr<Player>);
-    std::shared_ptr<Player> GetWinner(Player*);
+    void setWinner(std::shared_ptr<Player> player);
+    std::shared_ptr<Player> GetWinner();
 };
 
 #endif 

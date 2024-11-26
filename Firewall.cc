@@ -1,6 +1,5 @@
 #include "Firewall.h"
 using namespace std;
-#include "Firewall.h"
 #include "Ability.h"
 #include "board.h"
 #include "GameState.h"
