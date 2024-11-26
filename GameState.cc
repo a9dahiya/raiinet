@@ -154,6 +154,10 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
             }
 
             abilityUsed = true;
+            
         }
+
+        player->reduceAbilityCount();
+        
     }
 }

@@ -38,6 +38,7 @@ public:
     void addLink(shared_ptr<Link> link);
     void addAbility(shared_ptr<Ability> ability);
     bool operator!= (shared_ptr<Player> other);
+    void reduceAbilityCount();
 
     Player(string name);
 };

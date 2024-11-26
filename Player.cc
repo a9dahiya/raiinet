@@ -22,6 +22,10 @@ int Player::numAbilityLeft(){
     return abilitiesLeft;
 }
 
+void Player::reduceAbilityCount(){
+    abilitiesLeft--;
+}
+
 int Player::getData(){
     return downloadedData;
 }
