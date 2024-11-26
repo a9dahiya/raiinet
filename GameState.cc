@@ -109,6 +109,7 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 firewall->execute( shared_ptr<GameState>(this) );
             }else if(name == "Polarize"){
                 char link;
+                in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 shared_ptr<Polarize> polarize = make_shared<Polarize>(abilities[AbilityId], target_link);
                 polarize->execute( shared_ptr<GameState>(this) );
@@ -147,7 +148,7 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 in >> attacker >> defender;
                 shared_ptr<Link> attacking_link = GetCurrentPlayer()->getLink(attacker);
                 shared_ptr<Link> defending_link = GetNextPlayer()->getLink(defender);
-                shared_ptr<UnlimitedVoid> unlimitedVoid = make_shared<UnlimitedVoid>(abilities[AbilityId], attacker, defender);
+                shared_ptr<UnlimitedVoid> unlimitedVoid = make_shared<UnlimitedVoid>(abilities[AbilityId], attacking_link, defending_link);
                 unlimitedVoid->execute(shared_ptr<GameState>(this));
             }
 
