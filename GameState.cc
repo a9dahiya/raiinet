@@ -88,8 +88,8 @@ void GameState::moveLink(char linkId, const string& Dir){
         //ur mom type shi
     }
     
-    GetBoard()->moveLink(link, from, to, shared_ptr<GameState>(this));
-    
+    GetBoard()->moveLink(link, from, to, shared_from_this());
+    NextTurn();
 }
 
 void GameState::ExecuteAbility(int AbilityId, istream& in){
@@ -106,43 +106,43 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 Position pos{row, col};
                 shared_ptr<Cell> cell = GetBoard()->getCell(pos);
                 abilities[AbilityId]->setTargetCell(cell);
-                abilities[AbilityId]->execute( shared_ptr<GameState>(this) );
+                abilities[AbilityId]->execute( shared_from_this() );
             }else if(name == "Polarize"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute( shared_ptr<GameState>(this) );
+                abilities[AbilityId]->execute( shared_from_this() );
             }else if(name == "Download"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetNextPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute(shared_ptr<GameState>(this) );
+                abilities[AbilityId]->execute(shared_from_this() );
             }else if(name == "Scan"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetNextPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute(shared_ptr<GameState>(this));
+                abilities[AbilityId]->execute(shared_from_this());
             }else if(name == "Link Boost"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute(shared_ptr<GameState>(this));
+                abilities[AbilityId]->execute(shared_from_this());
             }else if(name == "Russian Roulette"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute(shared_ptr<GameState>(this));
+                abilities[AbilityId]->execute(shared_from_this());
             }else if(name == "Battle God"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute(shared_ptr<GameState>(this));
+                abilities[AbilityId]->execute(shared_from_this());
             }else if(name == "Unlimited Void"){
                 char attacker, defender;
                 in >> attacker >> defender;
@@ -150,7 +150,7 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 shared_ptr<Link> defending_link = GetNextPlayer()->getLink(defender);
                 abilities[AbilityId]->setMyLink(attacking_link);
                 abilities[AbilityId]->setOppLink(defending_link);
-                abilities[AbilityId]->execute(shared_ptr<GameState>(this));
+                abilities[AbilityId]->execute(shared_from_this());
             }
 
             abilityUsed = true;

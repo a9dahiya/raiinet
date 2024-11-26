@@ -22,7 +22,7 @@ class RussianRoulette;
 class Player;
 class Board;
 
-class GameState : public Subject {
+class GameState : public Subject, public std::enable_shared_from_this<GameState> {
     std::vector<std::shared_ptr<Player>> players;
     std::shared_ptr<Board> board;
     std::shared_ptr<Player> winner = nullptr;
