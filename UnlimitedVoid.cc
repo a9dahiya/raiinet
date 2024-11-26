@@ -1,4 +1,4 @@
-#include "UnlimtedVoid.h"
+#include "UnlimitedVoid.h"
 
 UnlimitedVoid::UnlimitedVoid(std::shared_ptr<Ability> ability, std::shared_ptr<Link> playerLink, std::shared_ptr<Link> opponentLink)
     : Ability(ability), playerLink{playerLink}, opponentLink{opponentLink} {}
