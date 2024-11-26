@@ -289,10 +289,10 @@ std::ostream& operator<<(std::ostream& out, const Board& board) {
             }
             else if (cell->isFirewall()) {
                 auto firewallOwner = cell->getFirewall()->getOwner();  
-                if (firewallOwner->getName() == "Player1") {
+                if (firewallOwner->getName() == "Player 1") {
                     out << "m";  // Firewall by Player1
                 }
-                else if (firewallOwner->getName() == "Player2") {
+                else if (firewallOwner->getName() == "Player 2") {
                     out << "w";  // Firewall by Player2
                 }
             }

@@ -2,6 +2,7 @@
 #include "Position.h"
 #include "Link.h"
 #include "Firewall.h"
+#include <iostream>
 
 Cell::Cell(Position pos, std::shared_ptr<Link> link, bool serverPort) : 
     pos{pos}, link{link}, isserverPort{serverPort} {}
@@ -30,6 +31,7 @@ void Cell::setLink(std::shared_ptr<Link> li) {
 void Cell::setFirewall(std::shared_ptr<Firewall> firee) {
     isfirewall = true;
     fire = firee;
+
 }
 
 void Cell::removeFirewall() {
