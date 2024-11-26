@@ -13,5 +13,5 @@ public:
     Scan(string name, int id, shared_ptr<Player> owner);
     void setTargetLink(shared_ptr<Link> link) override;
     
-}
+};
 #endif // SCAN_H
