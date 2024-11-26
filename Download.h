@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "Ability.h"
+
 class Link;
 class GameState;
 class Player;

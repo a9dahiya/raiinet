@@ -2,6 +2,7 @@
 #define CELL_H
 
 #include <memory>
+#include "Position.h"
 
 class Position;
 class Link;

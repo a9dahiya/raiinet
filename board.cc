@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Position.h"
 #include "GameState.h"
+#include "Firewall.h" 
 using namespace std;
 
 Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::vector<std::shared_ptr<Cell>>(width, nullptr)) {
@@ -35,6 +36,7 @@ Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::
         int belowrow = (index == 0) ? height - 2 : 1;
 
         int linkindex = 0;
+        int link_size = links.size();
         for (int x = 0; x < width; ++x) {
             Position currentPos(portrow, x);
             bool isServerPort = false;
@@ -55,8 +57,8 @@ Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::
                 links[linkindex]->setPos(Position(portrow, x));
                 linkindex++;
             }
-
-            if (linkindex >= links.size()) {
+            
+            if (linkindex >= link_size) {
                 break;
             }
         }
@@ -177,7 +179,6 @@ int Board::getWidth() const {
 
 bool Board::offEdge(Position pos, std::shared_ptr<Player> player) {
     int row = pos.getRow();
-    int col = pos.getCol();
 
     if (player->getName() == "Player2" && row < 0) {
         return true;
