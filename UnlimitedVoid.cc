@@ -9,5 +9,5 @@ void UnlimitedVoid::execute(std::shared_ptr<GameState> game) {
     auto result = board->tatake(playerLink, opponentLink);
 
     
-    std::cout << "Through Heaven and hell the honoured one is " << result << std::endl;
+    std::cout << "Through Heaven and hell the honoured one is " << result->getName() << std::endl;
 }
