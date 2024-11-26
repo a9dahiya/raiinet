@@ -7,6 +7,15 @@
 #include "TextObserver.h"
 #include "Link.h"
 
+#include "Firewall.h"
+#include "Scan.h"
+#include "LinkBoost.h"
+#include "Download.h"
+#include "Polarize.h"
+#include "UnlimitedVoid.h"
+#include "RussianRoulette.h"
+#include "BattleGod.h"
+
 #include <memory>
 #include <vector>
 #include <string>
@@ -111,7 +120,7 @@ int main(int argc, char* args[]) {
         x++;
     }
     
-    if(Link1order && Link2order){
+    if(!Link1order && !Link2order){
         // ur mom
     }
     // Setting default 5 abilities if not chosen
