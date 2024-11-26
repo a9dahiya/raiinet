@@ -27,8 +27,6 @@ Board::Board(std::vector<std::shared_ptr<Player>> players)
         players[1]->setServerPort(serverPorts[2]); 
         players[1]->setServerPort(serverPorts[3]);   
     } else {
-        std::cerr << "Error: Not enough players to assign server ports.\n";
-        // Handle error as appropriate (e.g., throw exception, exit, etc.)
     }
 
     // Initialize cells and mark server ports
@@ -47,7 +45,6 @@ Board::Board(std::vector<std::shared_ptr<Player>> players)
 
             // Create cell with or without server port
             board[y][x] = std::make_shared<Cell>(pos, nullptr, isServerPort);
-            std::cout << "Initializing cell at (" << y << ", " << x << ")\n";
         }
     }
 
@@ -80,8 +77,6 @@ Board::Board(std::vector<std::shared_ptr<Player>> players)
                 if (belowrow >= 0 && belowrow < height) { // Safety check
                     board[belowrow][x]->setLink(links[linkindex]);
                     links[linkindex]->setPos(Position(belowrow, x));
-                    std::cout << "Link " << links[linkindex]->getName() 
-                              << " added at (" << belowrow << ", " << x << ")\n";
                     linkindex++;
                 } else {
                     std::cerr << "Error: belowrow " << belowrow << " out of bounds.\n";
@@ -90,8 +85,6 @@ Board::Board(std::vector<std::shared_ptr<Player>> players)
                 // Assign link to the server port cell
                 board[portrow][x]->setLink(links[linkindex]);
                 links[linkindex]->setPos(Position(portrow, x));
-                std::cout << "Link " << links[linkindex]->getName() 
-                          << " added at (" << portrow << ", " << x << ")\n";
                 linkindex++;
             }
 
@@ -102,13 +95,8 @@ Board::Board(std::vector<std::shared_ptr<Player>> players)
         }
 
         // Optional: Handle any remaining links if necessary
-        if (linkindex < link_size) {
-            std::cerr << "Warning: Not all links were assigned for player " 
-                      << player->getName() << ".\n";
-        }
+       
     }
-
-    std::cout << "Board created successfully.\n";
 }
 
 bool Board::hasOppLink(Position pos, std::shared_ptr<Player> player) {
