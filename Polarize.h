@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "Ability.h"
+#include "Link.h"
 
 using namespace std;
 

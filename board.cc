@@ -5,6 +5,7 @@
 #include "Position.h"
 #include "GameState.h"
 #include "Firewall.h" 
+#include <iostream>
 using namespace std;
 
 Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::vector<std::shared_ptr<Cell>>(width, nullptr)) {

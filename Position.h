@@ -10,8 +10,9 @@ class Position {
 
 public:
     Position(int row , int col);
-    int getRow();
-    int getCol();
+    Position() : row(0), col(0) {}
+    int getRow() const;
+    int getCol() const;
     bool operator==(const Position& other) const;
     Position operator+(const string& dir);
 };

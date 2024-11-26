@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "Ability.h"
+#include "Link.h"
 
 
 class BattleGod : public Ability {

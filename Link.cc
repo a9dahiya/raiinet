@@ -1,5 +1,6 @@
 #include "Link.h"
 
+
 Link::Link(std::shared_ptr<Player> Owner, char letter, string name, bool Data, int strength)
 : Owner{Owner}, letter{letter}, name{name}, Data{Data}, strength{strength} {}
 
@@ -81,4 +82,6 @@ Position Link::getNewPos(string dir, int dist){
     if (dir == "right"){
         return Position{position.getRow(), position.getCol() + dist};
     }
+
+    return Position{};
 }

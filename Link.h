@@ -11,17 +11,17 @@ class Position;
 
 class Link {
     shared_ptr<Player> Owner;
+    char letter;
+    string name;
     bool Data;
     int strength;
     bool BattleGod = false;
-    char letter;
-    string name;
-    bool hasLinkBoost = false;
     Position position;
+    bool hasLinkBoost = false;
     bool revealed = false;
 
 public:
-    Link(shared_ptr<Player> Owner, char letter, string name, bool Data, int strength);
+    Link(std::shared_ptr<Player> Owner, char letter, string name, bool Data, int strength);
     shared_ptr<Player> getOwner();
     int getStrength();
     bool isData();

@@ -6,11 +6,11 @@ using namespace std;
 
 Position::Position(int row, int col) : row{row}, col{col}{}
 
-int Position::getRow(){
+int Position::getRow() const {
     return row;
 }
 
-int Position::getCol(){
+int Position::getCol() const {
     return col;
 }
 
@@ -31,4 +31,6 @@ Position Position::operator+(const string& dir){
     if(dir == "right"){
         col++;
     }
+
+    return Position{};
 }

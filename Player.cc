@@ -45,6 +45,7 @@ shared_ptr<Link> Player::getLink(char id){
             return i;
         }
     }
+    return nullptr;
 }
 
 bool Player::isOwnLink(shared_ptr<Link> link){
