@@ -46,9 +46,11 @@ Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::
 
             if (isServerPort) {
                 board[belowrow][x]->setLink(links[linkindex]);
+                links[linkindex]->setPos(Position(belowrow, x));
                 linkindex++;
             } else {
                 board[portrow][x]->setLink(links[linkindex++]);
+                links[linkindex]->setPos(Position(portrow, x));
                 linkindex++;
             }
 
@@ -117,14 +119,14 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
     }else if( isOppServer(to , game->GetCurrentPlayer()) ){
         game->GetNextPlayer()->downloadLink(link);
     }else if( cellTo->isFirewall() ){
-        if(link->getOwner != game->GetCurrentPlayer() ){
+        if(link->getOwner() != game->GetCurrentPlayer() ){
             link->isRevealed();
         }
         if(!link->isData()){
             shared_ptr<Player> player = link->getOwner();
             player->downloadLink(link);
             cellFrom->removeLink();
-        }else if( hasOppLink(to, game->GetCurrentPlayer() ){
+        }else if( hasOppLink(to, game->GetCurrentPlayer()) ){
             shared_ptr<Link> defender = cellTo->getLink();
             shared_ptr<Link> winner = tatake(link, defender);
             cellFrom->removeLink();
@@ -133,7 +135,7 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
         }else{
             cellFrom->removeLink();
             cellTo->setLink(link);
-            winner->setPos(to);
+            link->setPos(to);
         }
     }else if(hasOppLink(to, game->GetCurrentPlayer()) ){
         shared_ptr<Link> defender = cellTo->getLink();
@@ -149,7 +151,7 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
 
 }
 
-std::shared_ptr<Cell> Board::getCell(Position pos) {
+std::shared_ptr<Cell> Board::getCell(Position pos) const {
     return board[pos.getRow()][pos.getCol()];
 }
 

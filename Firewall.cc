@@ -1,6 +1,4 @@
 #include "Firewall.h"
-using namespace std;
-#include "Firewall.h"
 #include "Ability.h"
 #include "board.h"
 #include "GameState.h"
@@ -19,7 +17,10 @@ void Firewall::execute(std::shared_ptr<GameState> game) {
     if (board->isOppServer(cellPos, currentPlayer) || board->isOppServer(cellPos, game->GetNextPlayer())) return;
     targetCell->setFirewall(std::shared_ptr<Firewall>(this));
     setUsed();
-    
+<<<<<<< Updated upstream
+=======
     
 
+
+>>>>>>> Stashed changes
 }

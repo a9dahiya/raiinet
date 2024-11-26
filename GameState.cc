@@ -16,19 +16,44 @@ using namespace std;
 
 GameState::GameState(vector<shared_ptr<Player>> players): players{players}, Board{players} {}
 
-
-
 bool GameState::isAbilityUsed(){
     return abilityUsed;
 }
 
-void GameState::HasWon(){
-    for(auto player : players){
-        if(player->getData() == 4){
-            setW
+void GameState::HasWon() {
+    for (auto it = players.begin(); it != players.end();) {
+        if ((*it)->getVirus() == 4) {
+            it = players.erase(it);
+        } else {
+            if ((*it)->getData() == 4) {
+                setWinner(*it);
+                GameOver = true;
+                return; 
+            }
+            ++it;
         }
     }
-    GameOver = true;
+
+    if (players.size() == 1) {
+        setWinner(players.front());
+        GameOver = true;
+    }
+}
+
+shared_ptr<Board> GameState::GetBoard(){
+        return board;
+}
+
+std::vector<std::shared_ptr<Player>> GameState::getPlayers(){
+    return players;
+}
+
+void GameState::setWinner(std::shared_ptr<Player> player){
+    winner = player;
+}
+
+shared_ptr<Player> GameState::GetWinner(){
+    return winner;
 }
 
 bool GameState::isGameOver(){
@@ -78,11 +103,50 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 in >> row >> col;
                 Position pos{row, col};
                 shared_ptr<Cell> cell = GetBoard()->getCell(pos);
-                shared_ptr<Firewall> firewall = make_shared<Firewall>(abilities[AbilityId], cell);
+                shared_ptr<Firewall> firewall = make_shared<Firewall>(*(abilities[AbilityId]), cell);
                 firewall->execute();
             }else if(name == "Polarize"){
                 char link;
-                shared_ptr<Polarize> polarize = make_shared<Polarize>(abilities[AbilityId], link);
+                shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
+                shared_ptr<Polarize> polarize = make_shared<Polarize>(*(abilities[AbilityId]), target_link);
+                polarize->execute();
+            }else if(name == "Download"){
+                char link;
+                in >> link;
+                shared_ptr<Link> target_link = GetNextPlayer()->getLink(link);
+                shared_ptr<Download> download = make_shared<Download>(*(abilities[AbilityId]), target_link);
+                download->execute();
+            }else if(name == "Scan"){
+                char link;
+                in >> link;
+                shared_ptr<Link> target_link = GetNextPlayer()->getLink(link);
+                shared_ptr<Scan> scan = make_shared<Scan>(*(abilities[AbilityId]), target_link);
+                scan->execute();
+            }else if(name == "Link Boost"){
+                char link;
+                in >> link;
+                shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
+                shared_ptr<LinkBoost> linkBoost = make_shared<LinkBoost>(*(abilities[AbilityId]), target_link);
+                linkBoost->execute();
+            }else if(name == "Russian Roulette"){
+                char link;
+                in >> link;
+                shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
+                shared_ptr<RussianRoulette> russianRoulette = make_shared<RussianRoulette>(*(abilities[AbilityId]), target_link);
+                russianRoulette->execute();
+            }else if(name == "Battle God"){
+                char link;
+                in >> link;
+                shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
+                shared_ptr<BattleGod> battleGod = make_shared<BattleGod>(*(abilities[AbilityId]), target_link);
+                battleGod->execute();
+            }else if(name == "Unlimited Void"){
+                char attacker, defender;
+                in >> attacker >> defender;
+                shared_ptr<Link> attacking_link = GetCurrentPlayer()->getLink(attacker);
+                shared_ptr<Link> defending_link = GetNextPlayer()->getLink(defender);
+                shared_ptr<UnlimitedVoid> unlimitedVoid = make_shared<UnlimitedVoid>(*(abilities[AbilityId]), attacker, defender);
+                unlimitedVoid->execute();
             }
 
             abilityUsed == true;
