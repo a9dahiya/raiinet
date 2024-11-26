@@ -21,6 +21,7 @@ public:
     GameState(const vector<std::shared_ptr<Player>>& players);
     bool HasWon();
     void NextTurn();
+    std::vector<std::shared_ptr<Player>> getPlayers();
     std::shared_ptr<Player> GetCurrentPlayer();
     std::shared_ptr<Player> GetNextPlayer();
     shared_ptr<Board> GetBoard();

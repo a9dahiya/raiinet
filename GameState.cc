@@ -16,8 +16,6 @@ using namespace std;
 
 GameState::GameState(vector<shared_ptr<Player>> players): players{players}, Board{players} {}
 
-
-
 bool GameState::isAbilityUsed(){
     return abilityUsed;
 }
@@ -40,6 +38,10 @@ void GameState::HasWon() {
         setWinner(players.front());
         GameOver = true;
     }
+}
+
+std::vector<std::shared_ptr<Player>> GameState::getPlayers(){
+    return players;
 }
 
 void GameState::setWinner(std::shared_ptr<Player> player){
