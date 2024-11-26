@@ -3,8 +3,8 @@
 #include "Link.h"
 #include "Firewall.h"
 
-Cell::Cell(Position pos, std::shared_ptr<Link> link) : 
-    pos{pos}, link{link} {}
+Cell::Cell(Position pos, std::shared_ptr<Link> link, bool serverPort) : 
+    pos{pos}, link{link}, isserverPort{serverPort} {}
 
 
 Position Cell::getPos() {
@@ -43,4 +43,8 @@ bool Cell::isServerPort() {
 
 bool Cell::isFirewall(){
     return isfirewall;
+}
+
+void Cell::setServerPort(bool isServer) {
+    isserverPort = isServer;
 }

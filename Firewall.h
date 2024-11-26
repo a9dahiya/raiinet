@@ -1,7 +1,6 @@
 #ifndef FIREWALL_H
 #define FIREWALL_H
 
-
 using namespace std;
 
 #include <memory>
@@ -11,15 +10,18 @@ using namespace std;
 class Cell;
 class GameState;
 
-using namespace std;
-
 class Firewall : public Ability {
     shared_ptr<Cell> targetCell;
 
 public:
-    void execute(shared_ptr<GameState> game) override;
     Firewall(string name, int id, shared_ptr<Player> owner);
+
+    // Override virtual functions
+    void execute(shared_ptr<GameState> game) override;
     void setTargetCell(shared_ptr<Cell> cell) override;
+    void setTargetLink(shared_ptr<Link> link) override;
+    void setMyLink(shared_ptr<Link> link) override;
+    void setOppLink(shared_ptr<Link> link) override;
 };
 
 #endif // FIREWALL_H

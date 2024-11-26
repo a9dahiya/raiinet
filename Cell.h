@@ -10,7 +10,7 @@ class Firewall;
 
 class Cell {
 public:
-    Cell(Position pos, std::shared_ptr<Link> link);
+    Cell(Position pos, std::shared_ptr<Link> link, bool serverPort = false);
     Position getPos();
     std::shared_ptr<Link> getLink();
     void removeLink();
@@ -19,6 +19,7 @@ public:
     void removeFirewall();
     bool isFirewall();
     bool isServerPort();
+    void setServerPort(bool isServer);
     std::shared_ptr<Firewall> getFirewall();
 
 

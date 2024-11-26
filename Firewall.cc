@@ -24,3 +24,16 @@ void Firewall::execute(std::shared_ptr<GameState> game) {
 void Firewall::setTargetCell(shared_ptr<Cell> cell){
     targetCell = cell;
 }
+
+
+void Firewall::setTargetLink(shared_ptr<Link> link) {
+    // Firewall does not use target links, so this can remain empty
+}
+
+void Firewall::setMyLink(shared_ptr<Link> link) {
+    // Firewall does not use my links, so this can remain empty
+}
+
+void Firewall::setOppLink(shared_ptr<Link> link) {
+    // Firewall does not use opponent links, so this can remain empty
+}

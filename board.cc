@@ -8,7 +8,11 @@
 #include <iostream>
 using namespace std;
 
-Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::vector<std::shared_ptr<Cell>>(width, nullptr)) {
+
+Board::Board(std::vector<std::shared_ptr<Player>> players)
+    : board(height, std::vector<std::shared_ptr<Cell>>(width, nullptr)) 
+{
+    // Initialize server ports
     serverPorts = {
         Position(0, width / 2 - 1),
         Position(0, width / 2),
@@ -16,54 +20,95 @@ Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::
         Position(height - 1, width / 2)
     };
 
-    players[0]->setServerPort(serverPorts[0]);  
-    players[0]->setServerPort(serverPorts[1]); 
-    players[1]->setServerPort(serverPorts[2]); 
-    players[1]->setServerPort(serverPorts[3]);   
+    // Assign server ports to players
+    if (players.size() >= 2) {
+        players[0]->setServerPort(serverPorts[0]);  
+        players[0]->setServerPort(serverPorts[1]); 
+        players[1]->setServerPort(serverPorts[2]); 
+        players[1]->setServerPort(serverPorts[3]);   
+    } else {
+        std::cerr << "Error: Not enough players to assign server ports.\n";
+        // Handle error as appropriate (e.g., throw exception, exit, etc.)
+    }
 
-
+    // Initialize cells and mark server ports
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            board[y][x] = std::make_shared<Cell>(Position{x, y}, nullptr); 
-            //meoww hahah
+            Position pos(y, x); // Assuming Position is (row, col)
+            bool isServerPort = false;
+
+            // Check if current position is a server port
+            for (size_t sp = 0; sp < serverPorts.size(); ++sp) {
+                if (serverPorts[sp] == pos) {
+                    isServerPort = true;
+                    break;
+                }
+            }
+
+            // Create cell with or without server port
+            board[y][x] = std::make_shared<Cell>(pos, nullptr, isServerPort);
+            std::cout << "Initializing cell at (" << y << ", " << x << ")\n";
         }
     }
 
+    // Assign links to cells
     for (size_t index = 0; index < players.size(); ++index) {
         auto player = players[index];
         auto links = player->getAllLinks();
 
+        // Determine rows based on player index
         int portrow = (index == 0) ? height - 1 : 0;
         int belowrow = (index == 0) ? height - 2 : 1;
 
         int linkindex = 0;
         int link_size = links.size();
-        for (int x = 0; x < width; ++x) {
+
+        for (int x = 0; x < width && linkindex < link_size; ++x) {
             Position currentPos(portrow, x);
             bool isServerPort = false;
 
-            for (size_t i = 0; i < serverPorts.size(); ++i) {
-                if (serverPorts[i] == currentPos) {
+            // Check if current position is a server port
+            for (size_t sp = 0; sp < serverPorts.size(); ++sp) {
+                if (serverPorts[sp] == currentPos) {
                     isServerPort = true;
                     break;
                 }
             }
 
             if (isServerPort) {
-                board[belowrow][x]->setLink(links[linkindex]);
-                links[linkindex]->setPos(Position(belowrow, x));
-                linkindex++;
+                // Assign link to the cell below the server port
+                if (belowrow >= 0 && belowrow < height) { // Safety check
+                    board[belowrow][x]->setLink(links[linkindex]);
+                    links[linkindex]->setPos(Position(belowrow, x));
+                    std::cout << "Link " << links[linkindex]->getName() 
+                              << " added at (" << belowrow << ", " << x << ")\n";
+                    linkindex++;
+                } else {
+                    std::cerr << "Error: belowrow " << belowrow << " out of bounds.\n";
+                }
             } else {
-                board[portrow][x]->setLink(links[linkindex++]);
+                // Assign link to the server port cell
+                board[portrow][x]->setLink(links[linkindex]);
                 links[linkindex]->setPos(Position(portrow, x));
+                std::cout << "Link " << links[linkindex]->getName() 
+                          << " added at (" << portrow << ", " << x << ")\n";
                 linkindex++;
             }
-            
+
+            // Break if all links are assigned
             if (linkindex >= link_size) {
                 break;
             }
         }
+
+        // Optional: Handle any remaining links if necessary
+        if (linkindex < link_size) {
+            std::cerr << "Warning: Not all links were assigned for player " 
+                      << player->getName() << ".\n";
+        }
     }
+
+    std::cout << "Board created successfully.\n";
 }
 
 bool Board::hasOppLink(Position pos, std::shared_ptr<Player> player) {
@@ -230,31 +275,39 @@ bool Board::ValidMove(Position from, Position to, std::shared_ptr<Player> player
     return true;
 }
 
-std::ostream& operator<<(std::ostream& out, const std::shared_ptr<Board>& board) {
-    if (!board) { // Check for null shared_ptr
-        out << "Invalid Board";
-        return out;
-    }
+std::ostream& operator<<(std::ostream& out, const Board& board) {
+    // Print top border
+    out << "========\n";
 
-    for (int row = 0; row < board->getHeight(); ++row) {
-        for (int col = 0; col < board->getWidth(); ++col) {
-            auto cell = board->getCell(Position(row, col));
+    for (int row = 0; row < board.getHeight(); ++row) {
+        for (int col = 0; col < board.getWidth(); ++col) {
+            auto cell = board.getCell(Position(row, col));
             auto link = cell->getLink();
 
             if (link) {
-                out << link->getLetter();  
-            } else if (cell->isFirewall()) {
+                out << link->getLetter();
+            }
+            else if (cell->isFirewall()) {
                 auto firewallOwner = cell->getFirewall()->getOwner();  
                 if (firewallOwner->getName() == "Player1") {
-                    out << "m";  
-                } else if (firewallOwner->getName() == "Player2") {
-                    out << "w";  
+                    out << "m";  // Firewall by Player1
                 }
-            } else {
-                out << ".";  
+                else if (firewallOwner->getName() == "Player2") {
+                    out << "w";  // Firewall by Player2
+                }
+            }
+            else if (cell->isServerPort()) {
+                out << "S"; // Represent server ports
+            }
+            else {
+                out << ".";  // Empty cell
             }
         }
         out << "\n";
     }
+
+    // Print bottom border
+    out << "========\n";
+
     return out;
 }

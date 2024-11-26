@@ -126,7 +126,7 @@ int main(int argc, char* args[]) {
         // ur mom
     }
     // Setting default 5 abilities if not chosen
-    string abilityOrder = "LFSDO";
+    string abilityOrder = "LFSDP";
     if(!Ability1){
         setupAbility(P1, abilityOrder);
     }
