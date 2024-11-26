@@ -25,3 +25,7 @@ shared_ptr<Player> Ability::getOwner(){
 int Ability::getId(){
     return id;
 }
+
+Ability(const Ability& baseAbility) : name{baseAbility.name()}, 
+id{baseAbility.id()}, Owner{baseAbility.Owner}, used{baseAbility.used}{}
+
