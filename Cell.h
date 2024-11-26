@@ -20,6 +20,8 @@ public:
     void removeFirewall();
     bool isFirewall();
     bool isServerPort();
+    std::shared_ptr<Firewall> getFirewall();
+
 
     
 

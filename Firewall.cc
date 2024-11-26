@@ -20,6 +20,6 @@ void Firewall::execute(std::shared_ptr<GameState> game) {
     targetCell->setFirewall(std::shared_ptr<Firewall>(this));
     setUsed();
     
-
+    
 
 }

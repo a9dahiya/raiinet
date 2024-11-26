@@ -213,3 +213,28 @@ bool Board::ValidMove(Position from, Position to, std::shared_ptr<Player> player
 
     return true;
 }
+
+
+std::ostream& operator<<(std::ostream& out, const Board& board) {
+    for (int row = 0; row < board.getHeight(); ++row) {
+        for (int col = 0; col < board.getWidth(); ++col) {
+            auto cell = board.getCell(Position(row, col));
+            auto link = cell->getLink();
+
+            if (link) {
+                out << link->getLetter();  
+            } else if (cell->isFirewall()) {
+                auto firewallOwner = cell->getFirewall()->getOwner();  
+                if (firewallOwner->getName() == "Player1") {
+                    out << "m";  
+                } else if (firewallOwner->getName() == "Player2") {
+                    out << "w";  
+                }
+            } else {
+                out << ".";  
+            }
+        }
+        out << "\n";
+    }
+    return out;
+}
