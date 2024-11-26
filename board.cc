@@ -106,7 +106,7 @@ std::shared_ptr<Link> Board::tatake(std::shared_ptr<Link> attacker, std::shared_
 }
 
 
-void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, GameState* game) {
+void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, shared_ptr<GameState> game) {
     if (!link) return;
 
     shared_ptr<Cell> cellFrom = getCell(from);
@@ -118,7 +118,7 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, Gam
         game->GetNextPlayer()->downloadLink(link);
     }else if( cellTo->isFirewall() ){
         link->isRevealed();
-        if(!link->getIsData()){
+        if(!link->isData()){
             shared_ptr<Player> player = link->getOwner();
             player->downloadLink(link);
             cellFrom->removeLink();

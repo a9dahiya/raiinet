@@ -9,7 +9,7 @@ class Player;
 
 class Download : public Ability {
 public:
-    void execute(Game* game, const std::vector<std::string>& para) override;
+    void execute(shared_ptr<GameState> game) override;
 
 private:
     std::shared_ptr<Link> targetLink;

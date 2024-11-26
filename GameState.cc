@@ -2,16 +2,24 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include <Player.h>
-#include <Link.h>
-#include <string>
-#include <Ability.h>
-#include <Firewall.h>
-#include <Position.h>
+#include "Player.h"
+#include "Link.h"
+#include "Position.h"
+
+#include "Ability.h"
+#include "Firewall.h"
+#include "Polarize.h"
+#include "Scan.h"
+#include "Download.h"
+
 using namespace std;
 
 bool GameState::isAbilityUsed(){
     return abilityUsed;
+}
+
+bool GameState::HasWon(){
+    return GameOver();
 }
 
 void GameState::NextTurn(){
@@ -61,7 +69,9 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 firewall->execute();
             }else if(name == "Polarize"){
                 char link;
+                shared_ptr<Polarize> polarize = make_shared<Polarize>(abilities[AbilityId], link);
             }
+
             abilityUsed == true;
         }
     }

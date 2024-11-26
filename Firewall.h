@@ -8,12 +8,13 @@
 #include "GameState.h"
 #include "GameState.h"
 #include "Player.h"
+using namespace std;
 
 class Firewall : public Ability {
     std::shared_ptr<Cell> targetCell;
     public:
-    void execute(shared_ptr<GameState> game) override;
-    Firewall(shared_ptr<Cell> targetCell);
+    virtual void execute(shared_ptr<GameState> game) override;
+    Firewall(shared_ptr<Ability> ability, shared_ptr<Cell> targetCell);
 };
 
 #endif // FIREWALL_H
