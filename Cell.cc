@@ -1,6 +1,7 @@
 #include "Cell.h"
 #include "Position.h"
-#include <memory>
+#include "Link.h"
+#include "Firewall.h"
 
 Cell::Cell(Position pos, std::shared_ptr<Link> link) : 
     pos{pos}, link{link} {}

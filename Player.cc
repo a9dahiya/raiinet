@@ -1,4 +1,7 @@
 #include "Player.h"
+#include "Link.h"
+#include "Ability.h"
+#include "Position.h"
 
 Player::Player(string name) : name{name} {}
 

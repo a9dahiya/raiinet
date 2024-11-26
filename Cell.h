@@ -2,8 +2,6 @@
 #define CELL_H
 
 #include <memory>
-#include "Position.h"
-#include "Firewall.h"
 
 class Position;
 class Link;

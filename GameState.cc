@@ -1,4 +1,17 @@
-#include <GameState.h>
+#include "GameState.h"
+#include "board.h"
+#include "Player.h"
+#include "Link.h"
+#include "Position.h"
+#include "Ability.h"
+#include "Firewall.h"
+#include "Polarize.h"
+#include "Scan.h"
+#include "Download.h"
+#include "LinkBoost.h"
+#include "BattleGod.h"
+#include "UnlimitedVoid.h"
+#include "RussianRoulette.h"
 
 
 using namespace std;

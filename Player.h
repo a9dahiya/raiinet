@@ -4,8 +4,13 @@
 #include <memory>
 #include <vector>
 #include <string>
-#include "Link.h"
-#include "Ability.h"
+
+// Forward declarations
+class Link;
+class Ability;
+class Position;
+
+
 using namespace std;
 
 

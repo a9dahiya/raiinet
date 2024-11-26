@@ -4,11 +4,14 @@
 #include <vector>
 #include <memory>
 #include <iostream>
-#include "Cell.h"
-#include "link.h"
-#include "Player.h"
-#include "Position.h"
-#include "GameState.h"
+
+class Cell;
+class Link;
+class Player;
+class Position;
+class GameState;
+
+
 using namespace std;
 
 class Board {

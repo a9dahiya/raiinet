@@ -1,11 +1,13 @@
 #ifndef ABILITY_H
 #define ABILITY_H
 
-#include <memory>
-#include <string>
 
 using namespace std;
 
+#include <memory>
+#include <string>
+
+// Forward declarations
 class Player;
 class GameState;
 
@@ -17,7 +19,6 @@ class Ability {
 
 public:
     Ability(string name, int id, shared_ptr<Player> Owner);
-    Ability(const Ability& baseAbility);
     virtual void execute(shared_ptr<GameState> game) = 0;
     bool isUsed();
     void setUsed();

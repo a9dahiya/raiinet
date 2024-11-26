@@ -1,4 +1,6 @@
 #include "Ability.h"
+#include "Player.h"
+#include "GameState.h"
 
 using namespace std;
 
@@ -24,6 +26,4 @@ int Ability::getId(){
     return id;
 }
 
-Ability(const Ability& baseAbility) : name{baseAbility.name()}, 
-id{baseAbility.id()}, Owner{baseAbility.Owner}, used{baseAbility.used}{}
 

@@ -1,14 +1,15 @@
 #ifndef FIREWALL_H
 #define FIREWALL_H
 
-#include <memory>
-#include <vector>
-#include "Ability.h"
-#include "Cell.h"
-#include "GameState.h"
-#include "GameState.h"
-#include "Player.h"
+
 using namespace std;
+
+#include <memory>
+#include "Ability.h"
+
+// Forward declarations
+class Cell;
+class GameState;
 
 class Firewall : public Ability {
     std::shared_ptr<Cell> targetCell;

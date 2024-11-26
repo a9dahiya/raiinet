@@ -1,28 +1,24 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
+
 #include <vector>
 #include <memory>
 #include <string>
-#include "board.h"
-
 #include "subject.h"
-#include "Player.h"
-#include "Link.h"
-#include "Position.h"
 
-
-#include "Ability.h"
-#include "Firewall.h"
-#include "Polarize.h"
-#include "Scan.h"
-#include "Download.h"
-#include "LinkBoost.h"
-#include "BattleGod.h"
-#include "UnlimitedVoid.h"
-#include "RussianRoulette.h"
-
-
+// Forward declarations
+class Board;
+class Player;
+class Ability;
+class Firewall;
+class Polarize;
+class Scan;
+class Download;
+class LinkBoost;
+class BattleGod;
+class UnlimitedVoid;
+class RussianRoulette;
 class Player;
 class Board;
 

@@ -1,6 +1,8 @@
-#include "Position.h"
+#include "Board.h"
 #include "Cell.h"
-#include "board.h"
+#include "Link.h"
+#include "Player.h"
+#include "Position.h"
 #include "GameState.h"
 using namespace std;
 
