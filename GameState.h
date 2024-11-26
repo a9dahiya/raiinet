@@ -5,7 +5,23 @@
 #include <memory>
 #include <string>
 #include "board.h"
+
 #include "subject.h"
+#include "Player.h"
+#include "Link.h"
+#include "Position.h"
+
+
+#include "Ability.h"
+#include "Firewall.h"
+#include "Polarize.h"
+#include "Scan.h"
+#include "Download.h"
+#include "LinkBoost.h"
+#include "BattleGod.h"
+#include "UnlimitedVoid.h"
+#include "RussianRoulette.h"
+
 
 class Player;
 class Board;

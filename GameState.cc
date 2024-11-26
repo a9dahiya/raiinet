@@ -1,20 +1,9 @@
 #include <GameState.h>
-#include <vector>
-#include <memory>
-#include <string>
-#include "Player.h"
-#include "Link.h"
-#include "Position.h"
 
-#include "Ability.h"
-#include "Firewall.h"
-#include "Polarize.h"
-#include "Scan.h"
-#include "Download.h"
 
 using namespace std;
 
-GameState::GameState(vector<shared_ptr<Player>> players): players{players}, Board{players} {}
+GameState::GameState(const vector<shared_ptr<Player>> players): players{players}, board{make_shared<Board>(players)} {}
 
 bool GameState::isAbilityUsed(){
     return abilityUsed;
@@ -104,49 +93,49 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 Position pos{row, col};
                 shared_ptr<Cell> cell = GetBoard()->getCell(pos);
                 shared_ptr<Firewall> firewall = make_shared<Firewall>(*(abilities[AbilityId]), cell);
-                firewall->execute();
+                firewall->execute( shared_ptr<GameState>(this) );
             }else if(name == "Polarize"){
                 char link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 shared_ptr<Polarize> polarize = make_shared<Polarize>(*(abilities[AbilityId]), target_link);
-                polarize->execute();
+                polarize->execute( shared_ptr<GameState>(this) );
             }else if(name == "Download"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetNextPlayer()->getLink(link);
                 shared_ptr<Download> download = make_shared<Download>(*(abilities[AbilityId]), target_link);
-                download->execute();
+                download->execute(shared_ptr<GameState>(this) );
             }else if(name == "Scan"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetNextPlayer()->getLink(link);
                 shared_ptr<Scan> scan = make_shared<Scan>(*(abilities[AbilityId]), target_link);
-                scan->execute();
+                scan->execute(shared_ptr<GameState>(this));
             }else if(name == "Link Boost"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 shared_ptr<LinkBoost> linkBoost = make_shared<LinkBoost>(*(abilities[AbilityId]), target_link);
-                linkBoost->execute();
+                linkBoost->execute(shared_ptr<GameState>(this));
             }else if(name == "Russian Roulette"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 shared_ptr<RussianRoulette> russianRoulette = make_shared<RussianRoulette>(*(abilities[AbilityId]), target_link);
-                russianRoulette->execute();
+                russianRoulette->execute(shared_ptr<GameState>(this));
             }else if(name == "Battle God"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 shared_ptr<BattleGod> battleGod = make_shared<BattleGod>(*(abilities[AbilityId]), target_link);
-                battleGod->execute();
+                battleGod->execute(shared_ptr<GameState>(this));
             }else if(name == "Unlimited Void"){
                 char attacker, defender;
                 in >> attacker >> defender;
                 shared_ptr<Link> attacking_link = GetCurrentPlayer()->getLink(attacker);
                 shared_ptr<Link> defending_link = GetNextPlayer()->getLink(defender);
                 shared_ptr<UnlimitedVoid> unlimitedVoid = make_shared<UnlimitedVoid>(*(abilities[AbilityId]), attacker, defender);
-                unlimitedVoid->execute();
+                unlimitedVoid->execute(shared_ptr<GameState>(this));
             }
 
             abilityUsed == true;
