@@ -1,9 +1,11 @@
+#include <iostream>
 #include "Player.h"
+
 #include "Ability.h"
 #include "subject.h"
 #include "GameState.h"
 #include "Observer.h"
-#include "GraphicalObserver.h"
+// #include "GraphicalObserver.h"
 #include "TextObserver.h"
 #include "Link.h"
 
@@ -138,8 +140,9 @@ int main(int argc, char* args[]) {
     // Initializing GameState
     shared_ptr<GameState> game = make_shared<GameState>(players);
     if(setGraphics){
-        shared_ptr<GraphicalObserver> graphicDisplay = make_shared<GraphicalObserver>(game, P1);
-        game->attach(graphicDisplay);
+       // shared_ptr<GraphicalObserver> graphicDisplay = make_shared<GraphicalObserver>(game, P1);
+        //game->attach(graphicDisplay);
+        cout << "allah" << endl;
     }else{
         shared_ptr<TextObserver> textDisplay = make_shared<TextObserver>(game, P1);
         game->attach(textDisplay);

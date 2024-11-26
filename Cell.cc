@@ -15,6 +15,10 @@ std::shared_ptr<Link> Cell::getLink() {
     return link;
 }
 
+std::shared_ptr<Firewall> Cell::getFirewall(){
+    return fire;
+}
+
 void Cell::removeLink() {
     link = nullptr;
 }

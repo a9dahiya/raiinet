@@ -29,10 +29,10 @@ public:
     shared_ptr<Player> getOwner();
     int getId();
     virtual ~Ability() = default;
-    virtual void setTargetCell(shared_ptr<Cell> cell) = 0;
-    virtual void setTargetLink(shared_ptr<Link> link) = 0;
-    virtual void setMyLink(shared_ptr<Link> link) = 0;
-    virtual void setOppLink(shared_ptr<Link> link) = 0;
+    virtual void setTargetCell(shared_ptr<Cell> cell);
+    virtual void setTargetLink(shared_ptr<Link> link);
+    virtual void setMyLink(shared_ptr<Link> link);
+    virtual void setOppLink(shared_ptr<Link> link);
 };
 
 #endif // ABILITY_H

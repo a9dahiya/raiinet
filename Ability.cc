@@ -26,6 +26,10 @@ int Ability::getId(){
     return id;
 }
 
-// Ability(const Ability& baseAbility) : name{baseAbility.name}, 
-// id{baseAbility.id}, Owner{baseAbility.Owner}, used{baseAbility.used}{}
+void Ability::setTargetCell(shared_ptr<Cell> cell){}
 
+void Ability::setTargetLink(shared_ptr<Link> link){}
+
+void Ability::setMyLink(shared_ptr<Link> link){}
+
+void Ability::setOppLink(shared_ptr<Link> link){}

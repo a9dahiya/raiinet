@@ -230,11 +230,15 @@ bool Board::ValidMove(Position from, Position to, std::shared_ptr<Player> player
     return true;
 }
 
+std::ostream& operator<<(std::ostream& out, const std::shared_ptr<Board>& board) {
+    if (!board) { // Check for null shared_ptr
+        out << "Invalid Board";
+        return out;
+    }
 
-std::ostream& operator<<(std::ostream& out, const Board& board) {
-    for (int row = 0; row < board.getHeight(); ++row) {
-        for (int col = 0; col < board.getWidth(); ++col) {
-            auto cell = board.getCell(Position(row, col));
+    for (int row = 0; row < board->getHeight(); ++row) {
+        for (int col = 0; col < board->getWidth(); ++col) {
+            auto cell = board->getCell(Position(row, col));
             auto link = cell->getLink();
 
             if (link) {
