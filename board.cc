@@ -25,6 +25,7 @@ Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::
         }
     }
 
+<<<<<<< Updated upstream
     for (size_t index = 0; index < players.size(); ++index) {
         auto player = players[index];
         auto links = player->getAllLinks();
@@ -248,3 +249,7 @@ std::ostream& operator<<(std::ostream& out, const Board& board) {
     }
     return out;
 }
+=======
+    // meow haha
+}
+>>>>>>> Stashed changes
