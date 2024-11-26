@@ -13,8 +13,8 @@ using namespace std;
 class Firewall : public Ability {
     std::shared_ptr<Cell> targetCell;
     public:
-    virtual void execute(shared_ptr<GameState> game) override;
-    Firewall(shared_ptr<Ability> ability, shared_ptr<Cell> targetCell);
+    void execute(shared_ptr<GameState> game) override;
+    Firewall(std::shared_ptr<Ability> ability, std::shared_ptr<Cell> cell);
 };
 
 #endif // FIREWALL_H
