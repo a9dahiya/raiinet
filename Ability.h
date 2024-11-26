@@ -21,7 +21,7 @@ public:
     virtual void execute(shared_ptr<GameState> game) = 0;
     bool isUsed();
     void setUsed();
-    std::string getName();
+    string getName();
     shared_ptr<Player> getOwner();
     int getId();
 };
