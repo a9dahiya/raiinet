@@ -146,7 +146,10 @@ std::shared_ptr<Link> Board::tatake(std::shared_ptr<Link> attacker, std::shared_
 
 void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, shared_ptr<GameState> game) {
     if (!link) return;
+    cout << "To Row : " << to.getRow() << endl;
+    cout << "To Row : " << to.getRow() << endl;
 
+        cout << "Checking off edge now : " << endl;
     if (offEdge(to, game->GetCurrentPlayer())){ 
         game->GetCurrentPlayer()->downloadLink(link);
         removeLink(link->getPos());
@@ -154,10 +157,12 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
     }
 
 
+    cout << "Getting cellFrom: " << endl;
     shared_ptr<Cell> cellFrom = getCell(from);
+    cout << "Getting cellTo:" << endl;
     shared_ptr<Cell> cellTo = getCell(to);
 
-    if (!cellFrom || cellTo == nullptr) {
+    if (cellFrom == nullptr || cellTo == nullptr) {
         std::cerr << "Error: Invalid cell in moveLink.\n";
         return;
     }
@@ -231,8 +236,10 @@ bool Board::offEdge(Position pos, std::shared_ptr<Player> player) {
     int row = pos.getRow();
 
     if (player->getName() == "Player 2" && row < 0) {
+        cout << "OffEdge being passed" << endl;
         return true;
     } else if (player->getName() == "Player 1" && row >= height) {
+        cout << "OffEdge being passed for some reason" << endl;
         return true;
     }
 
@@ -251,7 +258,7 @@ bool Board::isOppServer(Position pos, std::shared_ptr<Player> player) {
     return false;
 }
 
-bool Board::ValidMove(Position from, Position to, std::shared_ptr<Player> player) {
+bool Board::ValidMove(Position from, Position to, std::shared_ptr<Player> player) { // Have to check this properly
     if (to.getCol() < 0 || to.getCol() >= width) {
         return false;
     }
@@ -271,6 +278,7 @@ bool Board::ValidMove(Position from, Position to, std::shared_ptr<Player> player
     }
 
     auto toCell = getCell(to);
+    if(!toCell) return false;
     auto targetLink = toCell->getLink();
     if (targetLink && player->isOwnLink(targetLink)) {
         return false;

@@ -86,6 +86,8 @@ void GameState::moveLink(char linkId, const string& Dir){
     Position to = link->getNewPos(Dir, dist);
     if(!(GetBoard()->ValidMove(from, to, player))){
         //ur mom type shi
+        cout << "Invalid move, try again!" << endl;
+        return;
     }
     
     GetBoard()->moveLink(link, from, to, shared_from_this());
