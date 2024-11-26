@@ -93,8 +93,6 @@ Board::Board(std::vector<std::shared_ptr<Player>> players)
                 break;
             }
         }
-
-        // Optional: Handle any remaining links if necessary
        
     }
 }
