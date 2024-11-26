@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include "board.h"
+#include "subject.h"
 
 class Player;
 class Board;

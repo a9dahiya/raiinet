@@ -5,9 +5,9 @@
 #include <vector>
 #include <string>
 #include "Link.h"
+#include "Ability.h"
 using namespace std;
 
-class Ability;
 
 class Player {
     string name;

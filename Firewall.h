@@ -4,16 +4,16 @@
 #include <memory>
 #include <vector>
 #include "Ability.h"
-class Cell;
-class GameState;
-class Player;
+#include "Cell.h"
+#include "GameState.h"
+#include "GameState.h"
+#include "Player.h"
 
 class Firewall : public Ability {
-public:
-    void execute(Game* game, const std::vector<std::string>& para) override;
-
-private:
     std::shared_ptr<Cell> targetCell;
+    public:
+    void execute(shared_ptr<GameState> game) override;
+    Firewall(shared_ptr<Cell> targetCell);
 };
 
 #endif // FIREWALL_H

@@ -40,7 +40,7 @@ void GameState::moveLink(char linkId, const string& Dir){
         //ur mom type shi
     }
     
-    GetBoard()->moveLink(link, from, to, this);
+    GetBoard()->moveLink(link, from, to, shared_ptr<GameState>(this));
     
 }
 

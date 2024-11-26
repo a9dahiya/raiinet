@@ -13,7 +13,7 @@
 #include <fstream>
 using namespace std;
 
-vector<shared_ptr<Ability>> setupAbility(shared_ptr<Player> player, string abilities){
+void setupAbility(shared_ptr<Player> player, string abilities){
     // Helper to initialize Abilities
     for (int x = 0; x < 5; ++x){
         if(abilities[x] == 'F'){
@@ -52,7 +52,7 @@ void setupLinks(shared_ptr<Player> player, string File, char index){
 
     while(f >> token){
         if(token[0] == 'd' || token[0] == 'D'){
-            bool isData = true;
+            isData = true;
         }
         int strength = token[1];
         shared_ptr<Link> link = make_shared<Link>(player, index, token, isData, strength);
@@ -132,10 +132,10 @@ int main(int argc, char* args[]) {
     // Initializing GameState
     shared_ptr<GameState> game = make_shared<GameState>(players);
     if(setGraphics){
-        shared_ptr<GraphicalObserver> graphicDisplay = make_shared<GraphicalObserver>(game);
+        shared_ptr<GraphicalObserver> graphicDisplay = make_shared<GraphicalObserver>(game, P1);
         game->attach(graphicDisplay);
     }else{
-        shared_ptr<TextObserver> textDisplay = make_shared<TextObserver>(game);
+        shared_ptr<TextObserver> textDisplay = make_shared<TextObserver>(game, P1);
         game->attach(textDisplay);
     }
 

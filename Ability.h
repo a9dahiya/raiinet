@@ -4,23 +4,25 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "Player.h"
+#include "GameState.h"
 
-class Game;
-class Link;
+using namespace std;
+
 
 class Ability {
 public:
     Ability(string name, int id, shared_ptr<Player> Owner);
-    virtual void execute(Game* game, const std::vector<std::string>& param);
+    virtual void execute(shared_ptr<GameState> game) = 0;
     bool isUsed();
     void setUsed();
     std::string getName();
     int getId();
 
 private:
-    std::string name;
+    string name;
     int id;
-    std::shared_ptr<Link> Owner;
+    shared_ptr<Player> Owner;
     bool used = false;
 };
 
