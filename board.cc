@@ -161,13 +161,32 @@ std::shared_ptr<Link> Board::tatake(std::shared_ptr<Link> attacker, std::shared_
 void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, shared_ptr<GameState> game) {
     if (!link) return;
 
+    //  if (offEdge(from, game->GetCurrentPlayer())) {
+    //     game->GetCurrentPlayer()->downloadLink(link);
+    //     return;
+    // }
+
+    if (offEdge(to, game->GetCurrentPlayer())) {
+        game->GetCurrentPlayer()->downloadLink(link);
+        removeLink(link->getPos());
+        return;
+    }
+
     shared_ptr<Cell> cellFrom = getCell(from);
     shared_ptr<Cell> cellTo = getCell(to);
+
+    if (!cellFrom || !cellTo) {
+        std::cerr << "Error: Invalid cell in moveLink.\n";
+        return;
+    }
+
+    
     
     if(offEdge(from, game->GetCurrentPlayer())){
         game->GetCurrentPlayer()->downloadLink(link);
     }else if( isOppServer(to , game->GetCurrentPlayer()) ){
         game->GetNextPlayer()->downloadLink(link);
+        removeLink(link->getPos());
     }else if( cellTo->isFirewall() ){
         if(link->getOwner() != game->GetCurrentPlayer() ){
             link->isRevealed();
@@ -202,8 +221,13 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
 }
 
 std::shared_ptr<Cell> Board::getCell(Position pos) const {
+    if (pos.getRow() < 0 || pos.getRow() >= height || pos.getCol() < 0 || pos.getCol() >= width) {
+        std::cerr << "Error: Position (" << pos.getRow() << ", " << pos.getCol() << ") is out of bounds.\n";
+        return nullptr;
+    }
     return board[pos.getRow()][pos.getCol()];
 }
+
 
 
 void Board::removeLink(Position pos) {
@@ -226,9 +250,9 @@ int Board::getWidth() const {
 bool Board::offEdge(Position pos, std::shared_ptr<Player> player) {
     int row = pos.getRow();
 
-    if (player->getName() == "Player2" && row < 0) {
+    if (player->getName() == "Player 2" && row < 0) {
         return true;
-    } else if (player->getName() == "Player1" && row >= height) {
+    } else if (player->getName() == "Player 1" && row >= height) {
         return true;
     }
 
@@ -248,12 +272,12 @@ bool Board::isOppServer(Position pos, std::shared_ptr<Player> player) {
 }
 
 bool Board::ValidMove(Position from, Position to, std::shared_ptr<Player> player) {
-    if (to.getCol() < 0 || to.getCol() >= width || to.getRow() < 0 || to.getRow() >= height) {
+    if (to.getCol() < 0 || to.getCol() >= width) {
         return false;
     }
 
     if (offEdge(to, player)) {
-        return false;
+        return true;
     }
 
     if (player->isOwnServerPort(to)) {
