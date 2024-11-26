@@ -20,12 +20,7 @@ protected:
 
 public:
     Ability(string name, int id, shared_ptr<Player> Owner);
-<<<<<<< Updated upstream
-    virtual void execute(shared_ptr<GameState> game) = 0;
-=======
-    Ability(const Ability& baseAbility);
     virtual void execute(shared_ptr<GameState> game);
->>>>>>> Stashed changes
     bool isUsed();
     void setUsed();
     string getName();

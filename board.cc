@@ -1,4 +1,4 @@
-#include "Board.h"
+#include "board.h"
 #include "Cell.h"
 #include "Link.h"
 #include "Player.h"

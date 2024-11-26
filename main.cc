@@ -111,8 +111,11 @@ int main(int argc, char* args[]) {
         x++;
     }
     
+    if(Link1order && Link2order){
+        // ur mom
+    }
     // Setting default 5 abilities if not chosen
-    string abilityOrder = "LFDSP";
+    vector<string> abilityOrder = {"LinkBoost", "Firewall", "Scan", "Download", "Polarize"};
     if(!Ability1){
         for(int x = 0; x < 5; ++x){
             shared_ptr<Ability> ability= make_shared<Ability>(abilityOrder[x],x,P1);
