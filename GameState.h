@@ -18,7 +18,7 @@ class GameState : public Subject {
     int PlayerTurn = 0;
     bool abilityUsed = false;
 public:
-    GameState(const vector<std::shared_ptr<Player>>& players);
+    GameState(const vector<std::shared_ptr<Player>> players);
     bool HasWon();
     void NextTurn();
     std::vector<std::shared_ptr<Player>> getPlayers();

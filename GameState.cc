@@ -40,6 +40,10 @@ void GameState::HasWon() {
     }
 }
 
+shared_ptr<Board> GameState::GetBoard(){
+        return board;
+}
+
 std::vector<std::shared_ptr<Player>> GameState::getPlayers(){
     return players;
 }
