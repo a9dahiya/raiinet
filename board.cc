@@ -147,37 +147,31 @@ std::shared_ptr<Link> Board::tatake(std::shared_ptr<Link> attacker, std::shared_
 void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, shared_ptr<GameState> game) {
     if (!link) return;
 
-    //  if (offEdge(from, game->GetCurrentPlayer())) {
-    //     game->GetCurrentPlayer()->downloadLink(link);
-    //     return;
-    // }
-
-    if (offEdge(to, game->GetCurrentPlayer())) {
+    if (offEdge(to, game->GetCurrentPlayer())){ 
         game->GetCurrentPlayer()->downloadLink(link);
         removeLink(link->getPos());
         return;
     }
 
+
     shared_ptr<Cell> cellFrom = getCell(from);
     shared_ptr<Cell> cellTo = getCell(to);
 
-    if (!cellFrom || !cellTo) {
+    if (!cellFrom || cellTo == nullptr) {
         std::cerr << "Error: Invalid cell in moveLink.\n";
         return;
     }
 
     
     
-    if(offEdge(from, game->GetCurrentPlayer())){
-        game->GetCurrentPlayer()->downloadLink(link);
-    }else if( isOppServer(to , game->GetCurrentPlayer()) ){
+    if( isOppServer(to , game->GetCurrentPlayer()) ){
         game->GetNextPlayer()->downloadLink(link);
         removeLink(link->getPos());
     }else if( cellTo->isFirewall() ){
-        if(link->getOwner() != game->GetCurrentPlayer() ){
-            link->isRevealed();
+        if(link->getOwner() != cellTo->getFirewall()->getOwner() ){
+            link->setRevealed();
         }
-        if(!link->isData()){
+        if(link->getOwner() != cellTo->getFirewall()->getOwner() && !link->isData()){
             shared_ptr<Player> player = link->getOwner();
             player->downloadLink(link);
             cellFrom->removeLink();
@@ -206,10 +200,10 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
 
 }
 
-std::shared_ptr<Cell> Board::getCell(Position pos) const {
+shared_ptr<Cell> Board::getCell(Position pos) const {
     if (pos.getRow() < 0 || pos.getRow() >= height || pos.getCol() < 0 || pos.getCol() >= width) {
-        std::cerr << "Error: Position (" << pos.getRow() << ", " << pos.getCol() << ") is out of bounds.\n";
-        return nullptr;
+        cout << "Error: Position (" << pos.getRow() << ", " << pos.getCol() << ") is out of bounds.\n";
+        return static_cast<shared_ptr<Cell>>(nullptr);
     }
     return board[pos.getRow()][pos.getCol()];
 }

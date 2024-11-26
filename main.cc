@@ -133,7 +133,7 @@ int main(int argc, char* args[]) {
     if(!Ability2){
         setupAbility(P2, abilityOrder);
     }
-
+    
     // Create Array of players
     vector<shared_ptr<Player>> players = { P1, P2 };;
 
