@@ -8,13 +8,14 @@ class Link;
 class GameState;
 class Player;
 
+using namespace std;
+
 class Download : public Ability {
-    std::shared_ptr<Link> targetLink;
+    shared_ptr<Link> targetLink;
 public:
     void execute(shared_ptr<GameState> game) override;
-    Download(shared_ptr<Ability> ability, shared_ptr<Link> link);
-    // YASHILA IS OVER HERE AND DISHAS BD IS HERE AND SHE DIDNT INVITE HER WHAT DO U WANNA 
-    // 2 options, we can invite her to the daru party honestly, or we just vibes
+    Download(string name, int id, shared_ptr<Player> owner);
+    void setTargetLink(shared_ptr<Link> link) override;
 };
 
 #endif // DOWNLOAD_H

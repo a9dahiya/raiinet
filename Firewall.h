@@ -11,11 +11,15 @@ using namespace std;
 class Cell;
 class GameState;
 
+using namespace std;
+
 class Firewall : public Ability {
-    std::shared_ptr<Cell> targetCell;
-    public:
+    shared_ptr<Cell> targetCell;
+
+public:
     void execute(shared_ptr<GameState> game) override;
-    Firewall(shared_ptr<Ability> ability, shared_ptr<Cell> cell);
+    Firewall(string name, int id, shared_ptr<Player> owner);
+    void setTargetCell(shared_ptr<Cell> cell) override;
 };
 
 #endif // FIREWALL_H

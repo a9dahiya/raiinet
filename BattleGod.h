@@ -5,12 +5,14 @@
 #include "Ability.h"
 #include "Link.h"
 
+using namespace std;
 
 class BattleGod : public Ability {
-    std::shared_ptr<Link> targetLink;
+    shared_ptr<Link> targetLink;
 public:
     void execute(shared_ptr<GameState> game) override;
-    BattleGod(shared_ptr<Ability> ability, shared_ptr<Link> link);
+    BattleGod(string name, int id, shared_ptr<Player> owner);
+    void setTargetLink(shared_ptr<Link> link) override;
 };
 
 #endif // BATTLEGOD_H

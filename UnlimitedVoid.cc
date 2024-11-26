@@ -4,14 +4,22 @@
 
 using namespace std;
 
-UnlimitedVoid::UnlimitedVoid(std::shared_ptr<Ability> ability, std::shared_ptr<Link> playerLink, std::shared_ptr<Link> opponentLink)
-    : Ability{ability->getName(), ability->getId(), ability->getOwner()}, playerLink{playerLink}, opponentLink{opponentLink} {}
+UnlimitedVoid::UnlimitedVoid(string name, int id, shared_ptr<Player> owner)
+    : Ability{name, id, owner}, playerLink{nullptr}, opponentLink{nullptr} {}
 
-void UnlimitedVoid::execute(std::shared_ptr<GameState> game) {
+void UnlimitedVoid::execute(shared_ptr<GameState> game) {
 
     auto board = game->GetBoard();
     auto result = board->tatake(playerLink, opponentLink);
 
     
-    std::cout << "Through Heaven and hell the honoured one is " << result->getName() << std::endl;
+    cout << "Through Heaven and hell the honoured one is " << result->getName() << std::endl;
+}
+
+void UnlimitedVoid::setMyLink(shared_ptr<Link> link){
+    playerLink = link;
+}
+
+void UnlimitedVoid::setOppLink(shared_ptr<Link> link){
+    opponentLink = link;
 }

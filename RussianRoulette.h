@@ -8,11 +8,12 @@
 using namespace std;
 
 class RussianRoulette : public Ability {
-    std::shared_ptr<Link> targetLink; 
+    shared_ptr<Link> targetLink; 
 
 public:
-    RussianRoulette(std::shared_ptr<Ability> ability, std::shared_ptr<Link> link);
-    void execute(std::shared_ptr<GameState> game) override;
+    RussianRoulette(string name, int id, shared_ptr<Player> owner);
+    void execute(shared_ptr<GameState> game) override;
+    void setTargetLink(shared_ptr<Link> link) override;
 };
 
 #endif // RUSSIAN_ROULETTE_H

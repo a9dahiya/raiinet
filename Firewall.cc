@@ -4,8 +4,8 @@
 #include "GameState.h"
 #include "Cell.h"
 
-Firewall::Firewall(shared_ptr<Ability> ability, shared_ptr<Cell> cell): 
-    Ability{ability->getName(), ability->getId(), ability->getOwner()}, targetCell{cell} {}
+Firewall::Firewall(string name, int id, shared_ptr<Player> owner): 
+    Ability{name, id, owner}, targetCell{nullptr} {}
 
 void Firewall::execute(std::shared_ptr<GameState> game) {
     auto board = game->GetBoard();
@@ -19,6 +19,8 @@ void Firewall::execute(std::shared_ptr<GameState> game) {
     targetCell->setFirewall(std::shared_ptr<Firewall>(this));
     setUsed();
     
+}
 
-
+void Firewall::setTargetCell(shared_ptr<Cell> cell){
+    targetCell = cell;
 }

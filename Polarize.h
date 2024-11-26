@@ -9,9 +9,10 @@ using namespace std;
 
 class Polarize : public Ability {
     shared_ptr<Link> targetLink;
-    public:
+public:
     void execute(shared_ptr<GameState> game) override;
-    Polarize(std::shared_ptr<Ability> ability, std::shared_ptr<Link> li);
+    Polarize(string name, int id, shared_ptr<Player> owner);
+    void setTargetLink(shared_ptr<Link> link) override;
     
 };
 

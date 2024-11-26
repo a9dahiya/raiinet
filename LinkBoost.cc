@@ -8,4 +8,9 @@ void LinkBoost::execute(shared_ptr<GameState> game){
     targetLink->setLinkBoost();
 }
 
-LinkBoost::LinkBoost(shared_ptr<Ability> ability, shared_ptr<Link> link): Ability{ability->getName(), ability->getId(), ability->getOwner()},targetLink{link} {}
+LinkBoost::LinkBoost(string name, int id, shared_ptr<Player> owner)
+: Ability{name, id, owner},targetLink{nullptr} {}
+
+void LinkBoost::setTargetLink(shared_ptr<Link> link){
+    targetLink = link;
+}

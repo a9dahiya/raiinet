@@ -8,10 +8,11 @@
 using namespace std;
 
 class LinkBoost : public Ability {
-    std::shared_ptr<Link> targetLink;
-    public:
+    shared_ptr<Link> targetLink;
+public:
     void execute(shared_ptr<GameState> game) override;
-    LinkBoost(shared_ptr<Ability> ability, shared_ptr<Link> link);
+    LinkBoost(string name, int id, shared_ptr<Player> owner);
+    void setTargetLink(shared_ptr<Link> link) override;
 };
 
 #endif // LINKBOOST_H

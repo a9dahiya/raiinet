@@ -6,9 +6,13 @@
 
 using namespace std;
 
-Polarize::Polarize(std::shared_ptr<Ability> ability, std::shared_ptr<Link> li):
-    Ability{ability->getName(), ability->getId(), ability->getOwner()},targetLink{li} {}
+Polarize::Polarize(string name, int id, shared_ptr<Player> owner):
+    Ability{name, id, owner}, targetLink{nullptr} {}
 
 void Polarize::execute(shared_ptr<GameState> game) {
     targetLink->switchType();
+}
+
+void Polarize::setTargetLink(shared_ptr<Link> link){
+    targetLink = link;
 }

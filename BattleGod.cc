@@ -5,4 +5,8 @@ void BattleGod::execute(shared_ptr<GameState> game){
     targetLink->setBattleGod();
 }
 
-BattleGod::BattleGod(shared_ptr<Ability> ability, shared_ptr<Link> link): Ability{ability->getName(), ability->getId(), ability->getOwner()}, targetLink{link} {}
+BattleGod::BattleGod(string name, int id, shared_ptr<Player> owner): Ability{name, id, owner}, targetLink{nullptr} {}
+
+void BattleGod::setTargetLink(shared_ptr<Link> link){
+    targetLink = link;
+}

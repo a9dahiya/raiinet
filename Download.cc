@@ -5,12 +5,16 @@ using namespace std;
 
 
 
-Download::Download(shared_ptr<Ability> ability, shared_ptr<Link> link): 
-    Ability{ability->getName(), ability->getId(), ability->getOwner()}, targetLink{link} {}
+Download::Download(string name, int id, shared_ptr<Player> owner): 
+    Ability{name, id, owner}, targetLink{nullptr} {}
 
 void Download::execute(shared_ptr<GameState> game){
     if(isUsed()){
         return;
     }
     game->GetCurrentPlayer()->downloadLink(targetLink);
+}
+
+void Download::setTargetLink(shared_ptr<Link> link){
+    targetLink = link;
 }

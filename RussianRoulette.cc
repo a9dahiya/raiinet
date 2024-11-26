@@ -3,8 +3,8 @@
 #include "Player.h"
 #include "GameState.h"
 
-RussianRoulette::RussianRoulette(std::shared_ptr<Ability> ability, std::shared_ptr<Link> link)
-    : Ability{ability->getName(), ability->getId(), ability->getOwner()}, targetLink{link} {}
+RussianRoulette::RussianRoulette(string name, int id, shared_ptr<Player> owner)
+    : Ability{name, id, owner}, targetLink{nullptr} {}
 
 void RussianRoulette::execute(std::shared_ptr<GameState> game) {
     auto players = game->getPlayers();
@@ -16,4 +16,8 @@ void RussianRoulette::execute(std::shared_ptr<GameState> game) {
     auto chosenPlayer = players[randomIndex];     
 
     chosenPlayer->downloadLink(targetLink);     
+}
+
+void RussianRoulette::setTargetLink(shared_ptr<Link> link){
+    targetLink = link;
 }
