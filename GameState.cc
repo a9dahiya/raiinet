@@ -71,7 +71,8 @@ shared_ptr<Player> GameState::GetCurrentPlayer(){
     return players[PlayerTurn];
 }
 shared_ptr<Player> GameState::GetNextPlayer(){
-    return players[PlayerTurn + 1];
+    int next_player = (PlayerTurn + 1) % (players.size());
+    return players[next_player];
 }
 
 void GameState::moveLink(char linkId, const string& Dir){
@@ -99,7 +100,12 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
         // Ability already used in turn
     }else{
         shared_ptr<Player> player = GetCurrentPlayer();
+        cout << player->getName() << endl;
         vector<shared_ptr<Ability>> abilities = player->getAbilities();
+        for(auto n : abilities){
+            cout << n->getName() << endl;
+        }
+
         if( !(abilities[AbilityId]->isUsed()) ){
             string name = abilities[AbilityId]->getName();
             if(name == "Firewall"){
@@ -156,10 +162,10 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
             }
 
             abilityUsed = true;
-            
+            player->reduceAbilityCount();   
+        }else{
+            cout << "ability already used" << endl;
         }
-
-        player->reduceAbilityCount();
         
     }
 }

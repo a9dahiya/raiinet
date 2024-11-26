@@ -146,20 +146,14 @@ std::shared_ptr<Link> Board::tatake(std::shared_ptr<Link> attacker, std::shared_
 
 void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, shared_ptr<GameState> game) {
     if (!link) return;
-    cout << "To Row : " << to.getRow() << endl;
-    cout << "To Row : " << to.getRow() << endl;
 
-        cout << "Checking off edge now : " << endl;
     if (offEdge(to, game->GetCurrentPlayer())){ 
         game->GetCurrentPlayer()->downloadLink(link);
         removeLink(link->getPos());
         return;
     }
 
-
-    cout << "Getting cellFrom: " << endl;
     shared_ptr<Cell> cellFrom = getCell(from);
-    cout << "Getting cellTo:" << endl;
     shared_ptr<Cell> cellTo = getCell(to);
 
     if (cellFrom == nullptr || cellTo == nullptr) {
