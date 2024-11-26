@@ -5,7 +5,7 @@
 #include "Cell.h"
 
 Firewall::Firewall(shared_ptr<Ability> ability, shared_ptr<Cell> cell): 
-    Ability{ability}, targetCell{cell} {}
+    Ability{ability->getName(), ability->getId(), ability->getOwner()}, targetCell{cell} {}
 
 void Firewall::execute(std::shared_ptr<GameState> game) {
     auto board = game->GetBoard();

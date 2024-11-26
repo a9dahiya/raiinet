@@ -31,7 +31,7 @@ int Player::getVirus(){
 }
 
 void Player::downloadLink(std::shared_ptr<Link> link){
-    if (link->getIsData()){
+    if (link->isData()){
         downloadedData++;
     }
     else{
@@ -41,7 +41,7 @@ void Player::downloadLink(std::shared_ptr<Link> link){
 
 shared_ptr<Link> Player::getLink(char id){
     for (auto i : myLinks){
-        if (id == i->getName()){
+        if (id == i->getLetter()){
             return i;
         }
     }
