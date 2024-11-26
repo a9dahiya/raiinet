@@ -1,20 +1,19 @@
 #ifndef DOWNLOAD_H
 #define DOWNLOAD_H
 
-#include <memory>
-#include "Ability.h"
+#include <memory> // For shared_ptr
+#include "Ability.h" // Full definition needed for inheritance
+
+// Forward declarations
 class Link;
 class GameState;
-class Player;
 
 class Download : public Ability {
-public:
-    void execute(shared_ptr<GameState> game) override;
-
-private:
     std::shared_ptr<Link> targetLink;
-    // YASHILA IS OVER HERE AND DISHAS BD IS HERE AND SHE DIDNT INVITE HER WHAT DO U WANNA 
-    // 2 options, we can invite her to the daru party honestly, or we just vibes
+
+public: 
+    Download(std::shared_ptr<Ability> ability, std::shared_ptr<Link> li);
+    void execute(std::shared_ptr<GameState> game) override;
 };
 
 #endif // DOWNLOAD_H
