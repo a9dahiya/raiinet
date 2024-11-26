@@ -151,7 +151,7 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
 
 }
 
-std::shared_ptr<Cell> Board::getCell(Position pos) {
+std::shared_ptr<Cell> Board::getCell(Position pos) const {
     return board[pos.getRow()][pos.getCol()];
 }
 
