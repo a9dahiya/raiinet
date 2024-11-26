@@ -17,28 +17,28 @@ void setupAbility(shared_ptr<Player> player, string abilities){
     // Helper to initialize Abilities
     for (int x = 0; x < 5; ++x){
         if(abilities[x] == 'F'){
-            shared_ptr<Ability> ability= make_shared<Ability>("Firewall", x, player);
+            shared_ptr<Ability> ability= make_shared<Firewall>("Firewall", x, player);
             player->addAbility(ability);
         }else if(abilities[x] == 'S'){
-            shared_ptr<Ability> ability= make_shared<Ability>("Scan", x, player);
+            shared_ptr<Ability> ability= make_shared<Scan>("Scan", x, player);
             player->addAbility(ability);
         }else if(abilities[x] == 'L'){
-            shared_ptr<Ability> ability= make_shared<Ability>("Link boost", x, player);
+            shared_ptr<Ability> ability= make_shared<LinkBoost>("Link boost", x, player);
             player->addAbility(ability);
         }else if(abilities[x] == 'D'){
-            shared_ptr<Ability> ability= make_shared<Ability>("Download", x, player);
+            shared_ptr<Ability> ability= make_shared<Download>("Download", x, player);
             player->addAbility(ability);
         }else if(abilities[x] == 'P'){
-            shared_ptr<Ability> ability= make_shared<Ability>("Polarize", x, player);
+            shared_ptr<Ability> ability= make_shared<Polarize>("Polarize", x, player);
             player->addAbility(ability);
         }else if(abilities[x] == 'U'){
-            shared_ptr<Ability> ability= make_shared<Ability>("Unlimited Void", x, player);
+            shared_ptr<Ability> ability= make_shared<UnlimitedVoid>("Unlimited Void", x, player);
             player->addAbility(ability);
         }else if(abilities[x] == 'R'){
-            shared_ptr<Ability> ability= make_shared<Ability>("Russian Roulette", x, player);
+            shared_ptr<Ability> ability= make_shared<RussianRoulette>("Russian Roulette", x, player);
             player->addAbility(ability);
         }else if(abilities[x] == 'B'){
-            shared_ptr<Ability> ability= make_shared<Ability>("Battle God", x, player);
+            shared_ptr<Ability> ability= make_shared<BattleGod>("Battle God", x, player);
             player->addAbility(ability);
         }
     }
@@ -115,18 +115,12 @@ int main(int argc, char* args[]) {
         // ur mom
     }
     // Setting default 5 abilities if not chosen
-    vector<string> abilityOrder = {"LinkBoost", "Firewall", "Scan", "Download", "Polarize"};
+    string abilityOrder = "LFSDO";
     if(!Ability1){
-        for(int x = 0; x < 5; ++x){
-            shared_ptr<Ability> ability= make_shared<Ability>(abilityOrder[x],x,P1);
-            P1->addAbility(ability);
-        }
+        setupAbility(P1, abilityOrder);
     }
     if(!Ability2){
-        for(int x = 0; x < 5; ++x){
-            shared_ptr<Ability> ability= make_shared<Ability>(abilityOrder[x],x,P2);
-            P2->addAbility(ability);
-        }
+        setupAbility(P2, abilityOrder);
     }
 
     // Create Array of players
