@@ -25,7 +25,6 @@ Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::
         }
     }
 
-<<<<<<< Updated upstream
     for (size_t index = 0; index < players.size(); ++index) {
         auto player = players[index];
         auto links = player->getAllLinks();
@@ -47,9 +46,11 @@ Board::Board(std::vector<std::shared_ptr<Player>> players) : board(height, std::
 
             if (isServerPort) {
                 board[belowrow][x]->setLink(links[linkindex]);
+                links[linkindex]->setPos(Position(belowrow, x));
                 linkindex++;
             } else {
                 board[portrow][x]->setLink(links[linkindex++]);
+                links[linkindex]->setPos(Position(portrow, x));
                 linkindex++;
             }
 
@@ -249,7 +250,3 @@ std::ostream& operator<<(std::ostream& out, const Board& board) {
     }
     return out;
 }
-=======
-    // meow haha
-}
->>>>>>> Stashed changes

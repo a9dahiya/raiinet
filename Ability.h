@@ -11,6 +11,19 @@ using namespace std;
 
 
 class Ability {
+<<<<<<< Updated upstream
+=======
+public:
+    Ability(string name, int id, shared_ptr<Player> Owner);
+    Ability(std::shared_ptr<Ability> baseAbility);
+    virtual void execute(shared_ptr<GameState> game) = 0;
+    bool isUsed();
+    void setUsed();
+    std::string getName();
+    int getId();
+
+private:
+>>>>>>> Stashed changes
     string name;
     int id;
     shared_ptr<Player> Owner;
