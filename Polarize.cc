@@ -11,6 +11,7 @@ Polarize::Polarize(string name, int id, shared_ptr<Player> owner):
 
 void Polarize::execute(shared_ptr<GameState> game) {
     targetLink->switchType();
+    setUsed();
 }
 
 void Polarize::setTargetLink(shared_ptr<Link> link){

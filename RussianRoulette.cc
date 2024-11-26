@@ -15,7 +15,8 @@ void RussianRoulette::execute(std::shared_ptr<GameState> game) {
     int randomIndex = dist(gen);           
     auto chosenPlayer = players[randomIndex];     
 
-    chosenPlayer->downloadLink(targetLink);     
+    chosenPlayer->downloadLink(targetLink);  
+    setUsed();   
 }
 
 void RussianRoulette::setTargetLink(shared_ptr<Link> link){

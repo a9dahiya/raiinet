@@ -6,6 +6,7 @@ void LinkBoost::execute(shared_ptr<GameState> game){
         return;
     }
     targetLink->setLinkBoost();
+    setUsed();
 }
 
 LinkBoost::LinkBoost(string name, int id, shared_ptr<Player> owner)

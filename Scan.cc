@@ -3,6 +3,7 @@
 
 void Scan::execute(shared_ptr<GameState> game){
     targetLink->setRevealed();
+    setUsed();
 }
 
 Scan::Scan(string name, int id, shared_ptr<Player> owner):

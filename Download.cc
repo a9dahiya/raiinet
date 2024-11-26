@@ -13,6 +13,7 @@ void Download::execute(shared_ptr<GameState> game){
         return;
     }
     game->GetCurrentPlayer()->downloadLink(targetLink);
+    setUsed();
 }
 
 void Download::setTargetLink(shared_ptr<Link> link){

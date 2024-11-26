@@ -11,6 +11,7 @@ void UnlimitedVoid::execute(shared_ptr<GameState> game) {
 
     auto board = game->GetBoard();
     auto result = board->tatake(playerLink, opponentLink);
+    setUsed();  
 
     
     cout << "Through Heaven and hell the honoured one is " << result->getName() << std::endl;
