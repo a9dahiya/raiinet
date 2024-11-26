@@ -57,8 +57,8 @@ Board::Board(std::vector<std::shared_ptr<Player>> players)
         auto links = player->getAllLinks();
 
         // Determine rows based on player index
-        int portrow = (index == 0) ? height - 1 : 0;
-        int belowrow = (index == 0) ? height - 2 : 1;
+        int portrow = (index == 0) ? 0 : height - 1;
+        int belowrow = (index == 0) ? 1 : height - 2;
 
         int linkindex = 0;
         int link_size = links.size();
