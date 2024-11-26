@@ -15,7 +15,7 @@ class Firewall : public Ability {
     std::shared_ptr<Cell> targetCell;
     public:
     void execute(shared_ptr<GameState> game) override;
-    Firewall(std::shared_ptr<Ability> ability, std::shared_ptr<Cell> cell);
+    Firewall(shared_ptr<Ability> ability, shared_ptr<Cell> cell);
 };
 
 #endif // FIREWALL_H
