@@ -63,8 +63,8 @@ void setupLinks(shared_ptr<Player> player, string File, char index){
 
 int main(int argc, char* args[]) {
     // Initializing Players and GameState
-    shared_ptr<Player> P1 = make_shared<Player>("Player1");
-    shared_ptr<Player> P2 = make_shared<Player>("Player2");
+    shared_ptr<Player> P1 = make_shared<Player>("Player 1");
+    shared_ptr<Player> P2 = make_shared<Player>("Player 2");
     int x = 0;
 
     // Flags for Initalizing GameState

@@ -14,12 +14,25 @@
 
 using namespace std;
 
+GameState::GameState(vector<shared_ptr<Player>> players): players{players}, Board{players} {}
+
+
+
 bool GameState::isAbilityUsed(){
     return abilityUsed;
 }
 
-bool GameState::HasWon(){
-    return GameOver();
+void GameState::HasWon(){
+    for(auto player : players){
+        if(player->getData() == 4){
+            setW
+        }
+    }
+    GameOver = true;
+}
+
+bool GameState::isGameOver(){
+    return GameOver;
 }
 
 void GameState::NextTurn(){

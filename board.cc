@@ -117,13 +117,23 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
     }else if( isOppServer(to , game->GetCurrentPlayer()) ){
         game->GetNextPlayer()->downloadLink(link);
     }else if( cellTo->isFirewall() ){
-        link->isRevealed();
+        if(link->getOwner != game->GetCurrentPlayer() ){
+            link->isRevealed();
+        }
         if(!link->isData()){
             shared_ptr<Player> player = link->getOwner();
             player->downloadLink(link);
             cellFrom->removeLink();
         }else if( hasOppLink(to, game->GetCurrentPlayer() ){
-
+            shared_ptr<Link> defender = cellTo->getLink();
+            shared_ptr<Link> winner = tatake(link, defender);
+            cellFrom->removeLink();
+            cellTo->setLink(winner);
+            winner->setPos(to);
+        }else{
+            cellFrom->removeLink();
+            cellTo->setLink(link);
+            winner->setPos(to);
         }
     }else if(hasOppLink(to, game->GetCurrentPlayer()) ){
         shared_ptr<Link> defender = cellTo->getLink();
