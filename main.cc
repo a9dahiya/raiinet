@@ -1,11 +1,10 @@
 #include <iostream>
 #include "Player.h"
-
 #include "Ability.h"
 #include "subject.h"
 #include "GameState.h"
 #include "Observer.h"
-// #include "GraphicalObserver.h"
+#include "GraphicalObserver.h"
 #include "TextObserver.h"
 #include "Link.h"
 
@@ -22,6 +21,8 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <algorithm>
+#include <random>
 using namespace std;
 
 void setupAbility(shared_ptr<Player> player, string abilities){
@@ -72,6 +73,24 @@ void setupLinks(shared_ptr<Player> player, string File, char index){
     }
 }
 
+void randomizeLinks(shared_ptr<Player> player, char index, vector<string>& links) {
+    random_device rd;
+    mt19937 g(rd());
+    shuffle(links.begin(), links.end(), g);
+
+    for (int i = 0; i < 8; ++i) {
+        string token = links[i];
+        bool isData = false;
+        if(token[0] == 'd' || token[0] == 'D'){
+            isData = true;
+        }
+        int strength = token[1];
+        shared_ptr<Link> link = make_shared<Link>(player, index, token, isData, strength);
+        player->addLink(link);
+        index++;
+    }
+}
+
 int main(int argc, char* args[]) {
     // Initializing Players and GameState
     shared_ptr<Player> P1 = make_shared<Player>("Player 1");
@@ -84,6 +103,7 @@ int main(int argc, char* args[]) {
     bool Link2order = false;
     bool Ability1 = false;
     bool Ability2 = false;
+    char ascii = 'a';
 
     // Checking for Command Line Arguments 
     while(x < argc){
@@ -93,14 +113,13 @@ int main(int argc, char* args[]) {
             Link1order = true;
             x++;
             arg = args[x];
-            char ascii = 'a';
             setupLinks(P1, arg, ascii);
         }else if(arg == "-link2"){
             // Add Order for Link for Player 2
             Link2order = true;
             x++;
             arg = args[x];
-            char ascii = 'A';
+            ascii = 'A';
             setupLinks(P2, arg, ascii);
         }else if(arg == "-graphics" ){
             // Enabling Graphical Observer
@@ -118,12 +137,17 @@ int main(int argc, char* args[]) {
             arg = args[x];
             setupAbility(P2, arg);
         }
-
         x++;
     }
-    
-    if(!Link1order && !Link2order){
-        // ur mom
+
+
+    vector<string> AllLinks = { "V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4" };
+    if(!Link1order){
+        randomizeLinks(P1, ascii, AllLinks);
+    }
+    if(!Link2order){
+        ascii = 'A';
+        randomizeLinks(P2, ascii, AllLinks);
     }
     // Setting default 5 abilities if not chosen
     string abilityOrder = "LFSDP";
@@ -183,7 +207,12 @@ int main(int argc, char* args[]) {
                 }
             }
         }else if(command == "sequence"){
-            
+            // ur mom bitch
         }
+        game->HasWon();
+        if(game->isGameOver()){
+            cout << "Game Over!, " << game->GetWinner()->getName() << " wins!" << endl;
+            break;
+        } 
     }
 }
