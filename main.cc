@@ -35,7 +35,7 @@ void setupAbility(shared_ptr<Player> player, string abilities){
             shared_ptr<Ability> ability= make_shared<Scan>("Scan", x, player);
             player->addAbility(ability);
         }else if(abilities[x] == 'L'){
-            shared_ptr<Ability> ability= make_shared<LinkBoost>("Link boost", x, player);
+            shared_ptr<Ability> ability= make_shared<LinkBoost>("Link Boost", x, player);
             player->addAbility(ability);
         }else if(abilities[x] == 'D'){
             shared_ptr<Ability> ability= make_shared<Download>("Download", x, player);

@@ -86,7 +86,7 @@ void GameState::moveLink(char linkId, const string& Dir){
         cerr << "Did not enter a valid direction. Try Again!" << endl;
         return;
     }
-
+    
     int dist = 1;
     if(link->getLinkBoost()){
         dist = 2;
