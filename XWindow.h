@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 class Xwindow {
   Display *d;
   Window w;

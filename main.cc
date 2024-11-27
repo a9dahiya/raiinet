@@ -164,9 +164,9 @@ int main(int argc, char* args[]) {
     // Initializing GameState
     shared_ptr<GameState> game = make_shared<GameState>(players);
     if(setGraphics){
-       // shared_ptr<GraphicalObserver> graphicDisplay = make_shared<GraphicalObserver>(game, P1);
-        //game->attach(graphicDisplay);
-        cout << "allah" << endl;
+       shared_ptr<GraphicalObserver> graphicDisplay = make_shared<GraphicalObserver>(game, P1);
+       game->attach(graphicDisplay);
+       cout << "allah" << endl;
     }else{
         shared_ptr<TextObserver> textDisplay = make_shared<TextObserver>(game, P1);
         game->attach(textDisplay);

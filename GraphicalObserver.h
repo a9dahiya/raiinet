@@ -6,19 +6,38 @@
 #include "XWindow.h"
 #include "GameState.h"
 #include "Player.h"
-using namespace std;
 
 class GraphicalObserver : public Observer {
 public:
     void notify() override;
-    GraphicalObserver(shared_ptr<GameState> subject, shared_ptr<Player> Viewer);
+    GraphicalObserver(std::shared_ptr<GameState> subject, std::shared_ptr<Player> Viewer);
+    ~GraphicalObserver(); // Destructor to clean up resources
+
 private:
     std::shared_ptr<GameState> subject;
     std::shared_ptr<Player> Viewer;
-    int height = 8;
-    int width = 8;
-    Xwindow *window; //added ptr here cuz some error was happening, might have to change in the future
-    int PixelSize = 10;
+    int height; // Board height
+    int width;  // Board width
+    std::shared_ptr<Xwindow> window; 
+    const int PixelSize = 50; // Size of each cell in pixels
+    const int InfoHeight = 150; // Height reserved for player info
+
+    // Colors (extend if needed)
+    enum Color {
+        White = 0,
+        Black,
+        Red,
+        Green,
+        Blue,
+        Yellow,
+        Cyan,
+        Magenta
+    };
+
+    // Helper functions
+    void drawBoard();
+    void drawPlayerInfo(std::shared_ptr<Player> player, int yOffset, bool isViewer);
+    void clearWindow();
 };
 
 #endif // GRAPHICALOBSERVER_H
