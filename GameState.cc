@@ -78,7 +78,15 @@ shared_ptr<Player> GameState::GetNextPlayer(){
 void GameState::moveLink(char linkId, const string& Dir){
     shared_ptr<Player> player = GetCurrentPlayer();
     shared_ptr<Link> link = player->getLink(linkId);
-    
+    if(!link){
+        cerr << "Cannot move a link that does not belong to you" << endl;
+        return;
+    }
+    if(Dir != "up" && Dir != "down" && Dir != "left" && Dir != "right"){
+        cerr << "Did not enter a valid direction. Try Again!" << endl;
+        return;
+    }
+
     int dist = 1;
     if(link->getLinkBoost()){
         dist = 2;
@@ -87,7 +95,7 @@ void GameState::moveLink(char linkId, const string& Dir){
     Position to = link->getNewPos(Dir, dist);
     if(!(GetBoard()->ValidMove(from, to, player))){
         //ur mom type shi
-        cout << "Invalid move, try again!" << endl;
+        cerr << "Invalid move, try again!" << endl;
         return;
     }
     
@@ -98,14 +106,10 @@ void GameState::moveLink(char linkId, const string& Dir){
 void GameState::ExecuteAbility(int AbilityId, istream& in){
     if(isAbilityUsed()){
         // Ability already used in turn
+        cerr << "Cannot use another Ability" << endl;
     }else{
         shared_ptr<Player> player = GetCurrentPlayer();
-        cout << player->getName() << endl;
         vector<shared_ptr<Ability>> abilities = player->getAbilities();
-        for(auto n : abilities){
-            cout << n->getName() << endl;
-        }
-
         if( !(abilities[AbilityId]->isUsed()) ){
             string name = abilities[AbilityId]->getName();
             if(name == "Firewall"){
@@ -166,6 +170,5 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
         }else{
             cout << "ability already used" << endl;
         }
-        
     }
 }

@@ -230,10 +230,8 @@ bool Board::offEdge(Position pos, std::shared_ptr<Player> player) {
     int row = pos.getRow();
 
     if (player->getName() == "Player 2" && row < 0) {
-        cout << "OffEdge being passed" << endl;
         return true;
     } else if (player->getName() == "Player 1" && row >= height) {
-        cout << "OffEdge being passed for some reason" << endl;
         return true;
     }
 

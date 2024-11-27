@@ -72,16 +72,11 @@ bool Link::operator==(shared_ptr<Link> other){
 Position Link::getNewPos(string dir, int dist){
     if (dir == "up"){
         return Position{position.getRow() - dist, position.getCol()};
-    }
-    if (dir == "down"){
+    }else if (dir == "down"){
         return Position{position.getRow() + dist, position.getCol()};
-    }
-    if (dir == "left"){
+    }else if (dir == "left"){
         return Position{position.getRow(), position.getCol() - dist};
-    }
-    if (dir == "right"){
+    }else{
         return Position{position.getRow(), position.getCol() + dist};
     }
-
-    return Position{};
 }
