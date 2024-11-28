@@ -100,12 +100,20 @@ void GraphicalObserver::drawBoard() {
             }
             else if (cell->isFirewall()) {
                 auto firewallOwner = cell->getFirewall()->getOwner();  
-                Color firewallColor = (firewallOwner == player1) ? Green : Yellow;
+                string firewallLetter = "w";
+                if(firewallOwner == player1){
+                    firewallLetter = "m";
+                }
+                Color firewallColor = White;
                 window->fillRectangle(x, y, PixelSize, PixelSize, firewallColor);
-                window->drawString(x + 20, y + 30, "F");
+                window->drawString(x + 20, y + 30, firewallLetter);
             }
             else if (cell->isServerPort()) {
-                window->fillRectangle(x, y, PixelSize, PixelSize, Magenta);
+                Color ServerPortColor = Green;
+                if(player1->isOwnServerPort(cell->getPos())){
+                    ServerPortColor = Red;
+                }
+                window->fillRectangle(x, y, PixelSize, PixelSize, ServerPortColor);
                 window->drawString(x + 20, y + 30, "S");
             }
             else {

@@ -91,6 +91,55 @@ void randomizeLinks(shared_ptr<Player> player, char index, vector<string>& links
     }
 }
 
+void readfromfile(shared_ptr<GameState> game, string file){
+    ifstream f{file};
+    string command;
+    while(f >> command){
+        if(command == "quit"){
+            // Exit game
+            break;
+        }else if(command == "move"){
+            // Move a Link
+            char link;
+            string direction;
+            if(f >> link >> direction){
+                game->moveLink(link, direction);
+            }
+        }else if (command == "ability"){
+            // Use an Ability
+            int id;
+            if(f >> id){
+                game->ExecuteAbility(id, f);
+            } 
+        }else if (command == "board"){
+            // Print Board
+            game->notifyObservers();
+        }else if(command == "abilities"){
+            // Print All Abilities
+            vector<shared_ptr<Ability>> abilities = game->GetCurrentPlayer()->getAbilities();
+            for(int x = 0; x < 5; ++x){
+                cout << "ID: " << x << ", " ;
+                cout << "Ability: " <<  abilities[x]->getName();
+                if(abilities[x]->isUsed()){
+                    cout << " ( Used )" << endl;
+                }else {
+                    cout << endl;
+                }
+            }
+        }else if(command == "sequence"){
+            string file;
+            f >> file;
+            readfromfile(game, file);
+        }
+        game->HasWon();
+        if(game->isGameOver()){
+            cout << "Game Over!, " << game->GetWinner()->getName() << " wins!" << endl;
+            break;
+        } 
+    }
+}
+
+
 int main(int argc, char* args[]) {
     // Initializing Players and GameState
     shared_ptr<Player> P1 = make_shared<Player>("Player 1");
@@ -207,7 +256,9 @@ int main(int argc, char* args[]) {
                 }
             }
         }else if(command == "sequence"){
-            // ur mom bitch
+            string file;
+            cin >> file;
+            readfromfile(game, file);
         }
         game->HasWon();
         if(game->isGameOver()){

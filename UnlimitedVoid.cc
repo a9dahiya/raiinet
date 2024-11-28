@@ -14,7 +14,7 @@ void UnlimitedVoid::execute(shared_ptr<GameState> game) {
     setUsed();  
 
     
-    cout << "Through Heaven and hell the honoured one is the Link " << result->getLetter() << std::endl;
+    cout << "Throughout Heaven and Earth, Link " << result->getLetter()  << " alone is the Honoured One" << std::endl;
 }
 
 void UnlimitedVoid::setMyLink(shared_ptr<Link> link){
