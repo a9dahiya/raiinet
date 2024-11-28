@@ -1,0 +1,4 @@
+move a down
+move A up
+ability 1 3 3
+board
