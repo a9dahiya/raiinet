@@ -15,7 +15,7 @@ class UnlimitedVoid : public Ability {
 public:
 
     UnlimitedVoid(string name, int id, shared_ptr<Player> owner);
-    void execute(std::shared_ptr<GameState> game) override;
+    bool execute(std::shared_ptr<GameState> game) override;
     void setMyLink(shared_ptr<Link> link) override;
     void setOppLink(shared_ptr<Link> link) override;
 

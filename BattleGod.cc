@@ -1,9 +1,14 @@
 #include "BattleGod.h"
 #include "Link.h"
 
-void BattleGod::execute(shared_ptr<GameState> game){
+bool BattleGod::execute(shared_ptr<GameState> game){
+    if(isUsed()){
+        return false;
+    }
+    if(!targetLink) return false;
     targetLink->setBattleGod();
     setUsed();
+    return true;
 }
 
 BattleGod::BattleGod(string name, int id, shared_ptr<Player> owner): Ability{name, id, owner}, targetLink{nullptr} {}

@@ -1,12 +1,16 @@
 #include "LinkBoost.h"
 #include "Link.h"
 
-void LinkBoost::execute(shared_ptr<GameState> game){
+bool LinkBoost::execute(shared_ptr<GameState> game){
     if(isUsed()){
-        return;
+        return false;
+    }
+    if(!targetLink){
+        return false;
     }
     targetLink->setLinkBoost();
     setUsed();
+    return true;
 }
 
 LinkBoost::LinkBoost(string name, int id, shared_ptr<Player> owner)

@@ -17,7 +17,7 @@ public:
     Firewall(string name, int id, shared_ptr<Player> owner);
 
     // Override virtual functions
-    void execute(shared_ptr<GameState> game) override;
+    bool execute(shared_ptr<GameState> game) override;
     void setTargetCell(shared_ptr<Cell> cell) override;
     void setTargetLink(shared_ptr<Link> link) override;
     void setMyLink(shared_ptr<Link> link) override;

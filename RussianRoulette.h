@@ -12,7 +12,7 @@ class RussianRoulette : public Ability {
 
 public:
     RussianRoulette(string name, int id, shared_ptr<Player> owner);
-    void execute(shared_ptr<GameState> game) override;
+    bool execute(shared_ptr<GameState> game) override;
     void setTargetLink(shared_ptr<Link> link) override;
 };
 

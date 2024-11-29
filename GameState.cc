@@ -110,6 +110,7 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
     }else{
         shared_ptr<Player> player = GetCurrentPlayer();
         vector<shared_ptr<Ability>> abilities = player->getAbilities();
+        bool success = false;
         if( !(abilities[AbilityId]->isUsed()) ){
             string name = abilities[AbilityId]->getName();
             if(name == "Firewall"){
@@ -118,43 +119,46 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 Position pos{row, col};
                 shared_ptr<Cell> cell = GetBoard()->getCell(pos);
                 abilities[AbilityId]->setTargetCell(cell);
-                abilities[AbilityId]->execute( shared_from_this() );
+                success = abilities[AbilityId]->execute( shared_from_this() );
             }else if(name == "Polarize"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
+                if(target_link == nullptr){
+                    shared_ptr<Link> target_link = GetNextPlayer()->getLink(link);
+                }
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute( shared_from_this() );
+                success = abilities[AbilityId]->execute( shared_from_this() );
             }else if(name == "Download"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetNextPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute(shared_from_this() );
+                success = abilities[AbilityId]->execute(shared_from_this() );
             }else if(name == "Scan"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetNextPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute(shared_from_this());
+                success = abilities[AbilityId]->execute(shared_from_this());
             }else if(name == "Link Boost"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute(shared_from_this());
+                success = abilities[AbilityId]->execute(shared_from_this());
             }else if(name == "Russian Roulette"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute(shared_from_this());
+                success = abilities[AbilityId]->execute(shared_from_this());
             }else if(name == "Battle God"){
                 char link;
                 in >> link;
                 shared_ptr<Link> target_link = GetCurrentPlayer()->getLink(link);
                 abilities[AbilityId]->setTargetLink(target_link);
-                abilities[AbilityId]->execute(shared_from_this());
+                success = abilities[AbilityId]->execute(shared_from_this());
             }else if(name == "Unlimited Void"){
                 char attacker, defender;
                 in >> attacker >> defender;
@@ -162,13 +166,16 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 shared_ptr<Link> defending_link = GetNextPlayer()->getLink(defender);
                 abilities[AbilityId]->setMyLink(attacking_link);
                 abilities[AbilityId]->setOppLink(defending_link);
-                abilities[AbilityId]->execute(shared_from_this());
+                success = abilities[AbilityId]->execute(shared_from_this());
             }
-
-            abilityUsed = true;
-            player->reduceAbilityCount();   
+            if(success){
+                abilityUsed = true;
+                player->reduceAbilityCount();  
+            }else{
+                cout << "Ability not executed, please enter the right parameters" << endl;
+            } 
         }else{
-            cout << "ability already used" << endl;
+            cout << "This ability has already been used" << endl;
         }
     }
 }

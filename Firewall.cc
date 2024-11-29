@@ -7,18 +7,19 @@
 Firewall::Firewall(string name, int id, shared_ptr<Player> owner): 
     Ability{name, id, owner}, targetCell{nullptr} {}
 
-void Firewall::execute(std::shared_ptr<GameState> game) {
+bool Firewall::execute(std::shared_ptr<GameState> game) {
     auto board = game->GetBoard();
     auto cellPos = targetCell->getPos();
     auto currentPlayer = game->GetCurrentPlayer();
 
-    if (isUsed()) return;
-    if (targetCell->getLink() != nullptr) return;
-    if (targetCell->isFirewall()) return;
+    if (isUsed()) return false;
+    if (targetCell->getLink() != nullptr) return false;
+    if (targetCell->isFirewall()) return false;
    
-    if (board->isOppServer(cellPos, currentPlayer) || board->isOppServer(cellPos, game->GetNextPlayer())) return;
+    if (board->isOppServer(cellPos, currentPlayer) || board->isOppServer(cellPos, game->GetNextPlayer())) return false;
     targetCell->setFirewall(std::shared_ptr<Firewall>(this));
     setUsed();
+    return true;
     
 }
 

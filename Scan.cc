@@ -1,9 +1,13 @@
 #include "Scan.h"
 #include "Link.h"
 
-void Scan::execute(shared_ptr<GameState> game){
+bool Scan::execute(shared_ptr<GameState> game){
+    if(!targetLink){
+        return false;
+    }
     targetLink->setRevealed();
-    setUsed();
+    setUsed();  
+    return true;
 }
 
 Scan::Scan(string name, int id, shared_ptr<Player> owner):

@@ -9,7 +9,10 @@
 RussianRoulette::RussianRoulette(string name, int id, shared_ptr<Player> owner)
     : Ability{name, id, owner}, targetLink{nullptr} {}
 
-void RussianRoulette::execute(std::shared_ptr<GameState> game) {
+bool RussianRoulette::execute(std::shared_ptr<GameState> game) {
+    if(!targetLink){
+        return false;
+    }
     auto players = game->getPlayers();
     std::random_device rd;                        
     std::mt19937 gen(rd());                
@@ -24,6 +27,7 @@ void RussianRoulette::execute(std::shared_ptr<GameState> game) {
     chosenPlayer->downloadLink(targetLink);  
     board->removeLink(targetLink->getPos());
     setUsed();   
+    return true;
 }
 
 void RussianRoulette::setTargetLink(shared_ptr<Link> link){
