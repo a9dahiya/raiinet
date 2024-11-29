@@ -12,6 +12,7 @@
 #include "BattleGod.h"
 #include "UnlimitedVoid.h"
 #include "RussianRoulette.h"
+#include <algorithm>
 
 
 using namespace std;
@@ -124,7 +125,13 @@ void GameState::moveLink(char linkId, const string& Dir){
         cerr << "This link is not on the board anymore and cannot be moved" << endl;
         return;
     }
-    if(Dir != "up" && Dir != "down" && Dir != "left" && Dir != "right"){
+
+    string dirLower = Dir;
+    for (auto& x : dirLower) {
+        x = tolower(x);
+    }
+
+    if (dirLower != "up" && dirLower != "down" && dirLower != "left" && dirLower != "right") {
         cerr << "Did not enter a valid direction. Try Again!" << endl;
         return;
     }
@@ -134,7 +141,7 @@ void GameState::moveLink(char linkId, const string& Dir){
         dist = 2;
     }
     Position from = link->getPos();
-    Position to = link->getNewPos(Dir, dist);
+    Position to = link->getNewPos(dirLower, dist);
     if(!(GetBoard()->ValidMove(from, to, player))){
         cerr << "Invalid move, try again!" << endl;
         return;
