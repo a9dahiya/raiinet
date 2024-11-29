@@ -11,7 +11,7 @@ class GraphicalObserver : public Observer {
 public:
     void notify() override;
     GraphicalObserver(std::shared_ptr<GameState> subject, std::shared_ptr<Player> Viewer);
-    ~GraphicalObserver(); // Destructor to clean up resources
+    ~GraphicalObserver(); 
 
 private:
     std::shared_ptr<GameState> subject;
@@ -34,7 +34,7 @@ private:
         Magenta
     };
 
-    // Helper functions
+    // Helpers
     void drawBoard();
     void drawPlayerInfo(std::shared_ptr<Player> player, int yOffset, bool isViewer);
     void clearWindow();

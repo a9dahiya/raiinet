@@ -17,14 +17,21 @@
 using namespace std;
 
 // Constructor for Game, calls Board constructor to initialize Board
+// Constructs the game state and initializes the board.
+// Inputs: const vector<shared_ptr<Player>>& players - List of players in the game.
 GameState::GameState(const vector<shared_ptr<Player>> players): players{players}, board{make_shared<Board>(players)} {}
 
-// checks if Ability has already been used in current turn
+
+// Checks if an ability has been used in the current turn.
+// Inputs: None.
+// Outputs: bool - True if an ability was used, false otherwise.
 bool GameState::isAbilityUsed(){
     return abilityUsed; 
 }
 
-// checks if a player has won and sets them as the winner, also removes any players that have lost from playing.
+// Checks if a player has won, updates the winner, and removes losing players.
+// Inputs: None.
+// Outputs: None
 void GameState::HasWon() { 
     for (auto it = players.begin(); it != players.end();) {
         if ((*it)->getVirus() == 4) {
@@ -45,49 +52,67 @@ void GameState::HasWon() {
     }
 }
 
-// allows Board methods to be accessed 
+// Returns the board.
+// Inputs: None.
+// Outputs: shared_ptr<Board> - The game board.
 shared_ptr<Board> GameState::GetBoard(){
     return board;
 }
 
-// gets array of players
+// Returns the list of players.
+// Inputs: None.
+// Outputs: vector<shared_ptr<Player>> - List of players.
 std::vector<std::shared_ptr<Player>> GameState::getPlayers(){
     return players;
 }
 
-// sets Winner of game
+// Sets the winner of the game.
+// Inputs: shared_ptr<Player> player - The player who has won.
+// Outputs: None.
 void GameState::setWinner(std::shared_ptr<Player> player){
     winner = player;
 }
 
-// returns winner
+// Returns the winner of the game.
+// Inputs: None.
+// Outputs: shared_ptr<Player> - The winning player.
 shared_ptr<Player> GameState::GetWinner(){
     return winner;
 }
 
-// returns if Game is over or not
+// Checks if the game is over.
+// Inputs: None.
+// Outputs: bool - True if the game is over, false otherwise.
 bool GameState::isGameOver(){
     return GameOver;
 }
 
-// moves current player index to next player. loops back to first player
+// Advances the turn to the next player.
+// Inputs: None.
+// Outputs: None.
 void GameState::NextTurn(){
     PlayerTurn = (PlayerTurn + 1) % (players.size());
     abilityUsed = false;
 }
 
-// gets current player
+// Returns the current player.
+// Inputs: None.
+// Outputs: shared_ptr<Player> - The current player.
 shared_ptr<Player> GameState::GetCurrentPlayer(){
     return players[PlayerTurn];
 }
 
-// gets next player
+// Returns the next player.
+// Inputs: None.
+// Outputs: shared_ptr<Player> - The next player.
 shared_ptr<Player> GameState::GetNextPlayer(){
     int next_player = (PlayerTurn + 1) % (players.size());
     return players[next_player];
 }
 
-// moves Link. calls Board::Link to move link across cells
+// Moves a player's link on the board.
+// Inputs: char linkId - ID of the link to move, const string& Dir - Direction to move.
+// Outputs: None.
 void GameState::moveLink(char linkId, const string& Dir){
     shared_ptr<Player> player = GetCurrentPlayer();
     shared_ptr<Link> link = player->getLink(linkId);
@@ -119,7 +144,9 @@ void GameState::moveLink(char linkId, const string& Dir){
     NextTurn();
 }
 
-// Executes ability for current player if it has not been used before
+// Executes an ability for the current player.
+// Inputs: int AbilityId - ID of the ability, istream& in - Input stream for ability parameters.
+// Outputs: None.
 void GameState::ExecuteAbility(int AbilityId, istream& in){
     if(AbilityId > 4 || AbilityId < 0){
         cerr << "Please enter a valid Ability Id";

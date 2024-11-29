@@ -54,4 +54,3 @@ void TextObserver::notify() {
     }
     cout << "\n";
 }
-

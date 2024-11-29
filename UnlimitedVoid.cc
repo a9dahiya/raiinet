@@ -12,7 +12,7 @@ bool UnlimitedVoid::execute(shared_ptr<GameState> game) {
         return false;
     }
     auto board = game->GetBoard();
-    auto result = board->tatake(playerLink, opponentLink);
+    auto result = board->tatakae(playerLink, opponentLink);
     setUsed();  
 
     
