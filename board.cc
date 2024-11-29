@@ -201,7 +201,7 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
 
 shared_ptr<Cell> Board::getCell(Position pos) const {
     if (pos.getRow() < 0 || pos.getRow() >= height || pos.getCol() < 0 || pos.getCol() >= width) {
-        cout << "Error: Position (" << pos.getRow() << ", " << pos.getCol() << ") is out of bounds.\n";
+        cerr << "Error: Position (" << pos.getRow() << ", " << pos.getCol() << ") is out of bounds.\n";
         return static_cast<shared_ptr<Cell>>(nullptr);
     }
     return board[pos.getRow()][pos.getCol()];

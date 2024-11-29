@@ -18,6 +18,7 @@ class Link {
     bool BattleGod = false;
     Position position;
     bool hasLinkBoost = false;
+    bool onBoard = true;
     bool revealed = false;
 
 public:
@@ -34,6 +35,8 @@ public:
     string getName();
     char getLetter(); 
     bool isRevealed();
+    bool isActive();
+    void setInactive();
     void setRevealed();
     bool operator==(shared_ptr<Link> other);
     void setPos(Position pos);

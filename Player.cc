@@ -41,6 +41,7 @@ void Player::downloadLink(std::shared_ptr<Link> link){
     else{
         downloadedVirus++;
     }
+    link->setInactive();
 }
 
 shared_ptr<Link> Player::getLink(char id){

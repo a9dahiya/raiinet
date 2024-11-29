@@ -56,6 +56,13 @@ void Link::setRevealed(){
     revealed = true;
 }
 
+bool Link::isActive(){
+    return onBoard;
+}
+void Link::setInactive(){
+    onBoard = false;
+}
+
 void Link::setPos(Position pos){
     position = pos;
 }

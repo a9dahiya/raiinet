@@ -16,13 +16,16 @@
 
 using namespace std;
 
+// Constructor for Game, calls Board constructor to initialize Board
 GameState::GameState(const vector<shared_ptr<Player>> players): players{players}, board{make_shared<Board>(players)} {}
 
+// checks if Ability has already been used in current turn
 bool GameState::isAbilityUsed(){
-    return abilityUsed;
+    return abilityUsed; 
 }
 
-void GameState::HasWon() {
+// checks if a player has won and sets them as the winner, also removes any players that have lost from playing.
+void GameState::HasWon() { 
     for (auto it = players.begin(); it != players.end();) {
         if ((*it)->getVirus() == 4) {
             it = players.erase(it);
@@ -42,44 +45,58 @@ void GameState::HasWon() {
     }
 }
 
+// allows Board methods to be accessed 
 shared_ptr<Board> GameState::GetBoard(){
-        return board;
+    return board;
 }
 
+// gets array of players
 std::vector<std::shared_ptr<Player>> GameState::getPlayers(){
     return players;
 }
 
+// sets Winner of game
 void GameState::setWinner(std::shared_ptr<Player> player){
     winner = player;
 }
 
+// returns winner
 shared_ptr<Player> GameState::GetWinner(){
     return winner;
 }
 
+// returns if Game is over or not
 bool GameState::isGameOver(){
     return GameOver;
 }
 
+// moves current player index to next player. loops back to first player
 void GameState::NextTurn(){
     PlayerTurn = (PlayerTurn + 1) % (players.size());
     abilityUsed = false;
 }
 
+// gets current player
 shared_ptr<Player> GameState::GetCurrentPlayer(){
     return players[PlayerTurn];
 }
+
+// gets next player
 shared_ptr<Player> GameState::GetNextPlayer(){
     int next_player = (PlayerTurn + 1) % (players.size());
     return players[next_player];
 }
 
+// moves Link. calls Board::Link to move link across cells
 void GameState::moveLink(char linkId, const string& Dir){
     shared_ptr<Player> player = GetCurrentPlayer();
     shared_ptr<Link> link = player->getLink(linkId);
     if(!link){
         cerr << "Cannot move a link that does not belong to you" << endl;
+        return;
+    }
+    if(!(link->isActive())){
+        cerr << "This link is not on the board anymore and cannot be moved" << endl;
         return;
     }
     if(Dir != "up" && Dir != "down" && Dir != "left" && Dir != "right"){
@@ -94,7 +111,6 @@ void GameState::moveLink(char linkId, const string& Dir){
     Position from = link->getPos();
     Position to = link->getNewPos(Dir, dist);
     if(!(GetBoard()->ValidMove(from, to, player))){
-        //ur mom type shi
         cerr << "Invalid move, try again!" << endl;
         return;
     }
@@ -103,7 +119,11 @@ void GameState::moveLink(char linkId, const string& Dir){
     NextTurn();
 }
 
+// Executes ability for current player if it has not been used before
 void GameState::ExecuteAbility(int AbilityId, istream& in){
+    if(AbilityId > 4 || AbilityId < 0){
+        cerr << "Please enter a valid Ability Id";
+    }
     if(isAbilityUsed()){
         // Ability already used in turn
         cerr << "Cannot use another Ability" << endl;
@@ -172,10 +192,10 @@ void GameState::ExecuteAbility(int AbilityId, istream& in){
                 abilityUsed = true;
                 player->reduceAbilityCount();  
             }else{
-                cout << "Ability not executed, please enter the right parameters" << endl;
+                cerr << "Ability not executed, please enter the right parameters" << endl;
             } 
         }else{
-            cout << "This ability has already been used" << endl;
+            cerr << "This ability has already been used" << endl;
         }
     }
 }
