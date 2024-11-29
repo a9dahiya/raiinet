@@ -148,6 +148,7 @@ int main(int argc, char* args[]) {
 
     // Flags for Initalizing GameState
     bool setGraphics = false;
+    bool view_player2 = false;
     bool Link1order = false;
     bool Link2order = false;
     bool Ability1 = false;
@@ -170,7 +171,10 @@ int main(int argc, char* args[]) {
             arg = args[x];
             ascii = 'A';
             setupLinks(P2, arg, ascii);
-        }else if(arg == "-graphics" ){
+        }else if(arg == "-player2"){
+            // Setting Player 1 as the viewer 
+            view_player2 = true;
+        } else if(arg == "-graphics" ){
             // Enabling Graphical Observer
             setGraphics = true;
         }else if(arg == "-ability1"){
@@ -189,7 +193,7 @@ int main(int argc, char* args[]) {
         x++;
     }
 
-
+    // Randomizing order of links if order not given: 
     vector<string> AllLinks = { "V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4" };
     if(!Link1order){
         randomizeLinks(P1, ascii, AllLinks);
@@ -198,7 +202,9 @@ int main(int argc, char* args[]) {
         ascii = 'A';
         randomizeLinks(P2, ascii, AllLinks);
     }
-    // Setting default 5 abilities if not chosen
+
+    
+    // Setting default 5 abilities if not chosen:
     string abilityOrder = "LFSDP";
     if(!Ability1){
         setupAbility(P1, abilityOrder);
@@ -208,17 +214,28 @@ int main(int argc, char* args[]) {
     }
     
     // Create Array of players
-    vector<shared_ptr<Player>> players = { P1, P2 };;
+    vector<shared_ptr<Player>> players = { P1, P2 };
 
     // Initializing GameState
     shared_ptr<GameState> game = make_shared<GameState>(players);
+
+    // Initializing Observers 
     if(setGraphics){
-       shared_ptr<GraphicalObserver> graphicDisplay = make_shared<GraphicalObserver>(game, P1);
-       game->attach(graphicDisplay);
-       cout << "allah" << endl;
+        if(view_player2){
+            shared_ptr<GraphicalObserver> graphicDisplay = make_shared<GraphicalObserver>(game, P2);
+            game->attach(graphicDisplay);
+        }else{
+            shared_ptr<GraphicalObserver> graphicDisplay = make_shared<GraphicalObserver>(game, P1);
+            game->attach(graphicDisplay);
+        }
     }else{
-        shared_ptr<TextObserver> textDisplay = make_shared<TextObserver>(game, P1);
-        game->attach(textDisplay);
+        if(view_player2){
+            shared_ptr<TextObserver> textDisplay = make_shared<TextObserver>(game, P2);
+            game->attach(textDisplay);
+        }else{
+            shared_ptr<TextObserver> textDisplay = make_shared<TextObserver>(game, P1);
+            game->attach(textDisplay);
+        }
     }
 
     // GAME LOOP

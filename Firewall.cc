@@ -14,6 +14,7 @@ void Firewall::execute(std::shared_ptr<GameState> game) {
 
     if (isUsed()) return;
     if (targetCell->getLink() != nullptr) return;
+    if (targetCell->isFirewall()) return;
    
     if (board->isOppServer(cellPos, currentPlayer) || board->isOppServer(cellPos, game->GetNextPlayer())) return;
     targetCell->setFirewall(std::shared_ptr<Firewall>(this));
