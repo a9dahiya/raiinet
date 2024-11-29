@@ -149,7 +149,7 @@ void GameState::moveLink(char linkId, const string& Dir){
 // Outputs: None.
 void GameState::ExecuteAbility(int AbilityId, istream& in){
     if(AbilityId > 4 || AbilityId < 0){
-        cerr << "Please enter a valid Ability Id";
+        cerr << "Please enter a valid Ability Id" << endl;
         return;
     }
     if(isAbilityUsed()){
