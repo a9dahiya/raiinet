@@ -27,36 +27,55 @@ using namespace std;
 
 bool setupAbility(shared_ptr<Player> player, string abilities){
     // Helper to initialize Abilities
+    int firewall = 0;
+    int scan = 0;
+    int linkBoost = 0;
+    int download = 0;
+    int polarize = 0;
+    int unlimitedVoid = 0;
+    int rRoulette = 0;
+    int BGod = 0;
+    vector<shared_ptr<Ability>> abilities_list;
     for (int x = 0; x < 5; ++x){
         if(abilities[x] == 'F'){
-            shared_ptr<Ability> ability= make_shared<Firewall>("Firewall", x, player);
-            player->addAbility(ability);
+            if(firewall > 2) return false;
+            abilities_list.emplace_back(make_shared<Firewall>("Firewall", x, player));
+            firewall++;
         }else if(abilities[x] == 'S'){
-            shared_ptr<Ability> ability= make_shared<Scan>("Scan", x, player);
-            player->addAbility(ability);
+            if (scan > 2) return false;
+            abilities_list.emplace_back(make_shared<Scan>("Scan", x, player));
+            scan++;
         }else if(abilities[x] == 'L'){
-            shared_ptr<Ability> ability= make_shared<LinkBoost>("Link Boost", x, player);
-            player->addAbility(ability);
+            if(linkBoost > 2) return false;
+            abilities_list.emplace_back(make_shared<LinkBoost>("Link Boost", x, player));
+            linkBoost++;
         }else if(abilities[x] == 'D'){
-            shared_ptr<Ability> ability= make_shared<Download>("Download", x, player);
-            player->addAbility(ability);
+            if(download > 2) return false;
+            abilities_list.emplace_back(make_shared<Download>("Download", x, player));
+            download++;
         }else if(abilities[x] == 'P'){
-            shared_ptr<Ability> ability= make_shared<Polarize>("Polarize", x, player);
-            player->addAbility(ability);
+            if(polarize > 2) return false;
+            abilities_list.emplace_back(make_shared<Polarize>("Polarize", x, player));
+            polarize++;
         }else if(abilities[x] == 'U'){
-            shared_ptr<Ability> ability= make_shared<UnlimitedVoid>("Unlimited Void", x, player);
-            player->addAbility(ability);
+            if(unlimitedVoid > 2) return false;
+            abilities_list.emplace_back(make_shared<UnlimitedVoid>("Unlimited Void", x, player));
+            unlimitedVoid++;
         }else if(abilities[x] == 'R'){
-            shared_ptr<Ability> ability= make_shared<RussianRoulette>("Russian Roulette", x, player);
-            player->addAbility(ability);
+            if(rRoulette > 2) return false;
+            abilities_list.emplace_back(make_shared<RussianRoulette>("Russian Roulette", x, player));
+            rRoulette++;
         }else if(abilities[x] == 'B'){
-            shared_ptr<Ability> ability= make_shared<BattleGod>("Battle God", x, player);
-            player->addAbility(ability);
+            if(BGod > 2) return false;
+            abilities_list.emplace_back(make_shared<BattleGod>("Battle God", x, player));
+            BGod++;
         }else{
             cerr << "Cannot setup player abilities, using default..." << endl;
             return false;
         }
     }
+
+    player->addAbility(abilities_list);
     return true;
 }
 
@@ -69,9 +88,17 @@ bool setupLinks(shared_ptr<Player> player, string File, char index){
     }
     string token;
     bool isData = false;
-
+    vector<shared_ptr<Link>> player_links;
     while(f >> token){
         if(token.size() != 2){
+            cerr << "Cannot setup provided Link Order, randomizing Links..." << endl;
+            return false;
+        }
+        if(token[0] != 'D' || token[0] != 'd' || token[0] != 'V' || token[0] != 'v'){
+            cerr << "Cannot setup provided Link Order, randomizing Links..." << endl;
+            return false;
+        }
+        if(token[1] != '1' || token[1] != '2' || token[1] != '3' || token[1] != '4'){
             cerr << "Cannot setup provided Link Order, randomizing Links..." << endl;
             return false;
         }
@@ -79,10 +106,11 @@ bool setupLinks(shared_ptr<Player> player, string File, char index){
             isData = true;
         }
         int strength = token[1];
-        shared_ptr<Link> link = make_shared<Link>(player, index, token, isData, strength);
-        player->addLink(link);
+        player_links.emplace_back(make_shared<Link>(player, index, token, isData, strength));
         index++;
-    }
+    }  
+    if(player_links.size() != 8) return false;
+    player->addLink(player_links);
     return true;
 }
 
@@ -90,7 +118,7 @@ void randomizeLinks(shared_ptr<Player> player, char index, vector<string>& links
     random_device rd;
     mt19937 g(rd());
     shuffle(links.begin(), links.end(), g);
-
+    vector<shared_ptr<Link>> player_links;
     for (int i = 0; i < 8; ++i) {
         string token = links[i];
         bool isData = false;
@@ -98,8 +126,8 @@ void randomizeLinks(shared_ptr<Player> player, char index, vector<string>& links
             isData = true;
         }
         int strength = token[1];
-        shared_ptr<Link> link = make_shared<Link>(player, index, token, isData, strength);
-        player->addLink(link);
+        player_links.emplace_back(make_shared<Link>(player, index, token, isData, strength));
+        player->addLink(player_links);
         index++;
     }
 }

@@ -35,8 +35,8 @@ public:
     bool isOwnLink(shared_ptr<Link> link);
     void setServerPort(Position pos);
     bool isOwnServerPort(Position pos);
-    void addLink(shared_ptr<Link> link);
-    void addAbility(shared_ptr<Ability> ability);
+    void addLink(vector<shared_ptr<Link>> linkList);
+    void addAbility(vector<shared_ptr<Ability>> abilityList);
     bool operator!= (shared_ptr<Player> other);
     void reduceAbilityCount();
 

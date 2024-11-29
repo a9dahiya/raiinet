@@ -75,13 +75,14 @@ bool Player::isOwnServerPort(Position pos){
     return false;
 }
 
-void Player::addLink(shared_ptr<Link> link){
-    myLinks.emplace_back(link);
+void Player::addLink(vector<shared_ptr<Link>> linkList){
+    myLinks = linkList;
 }
 
-void Player::addAbility(shared_ptr<Ability> ability){
-    Abilities.emplace_back(ability);
-    abilitiesLeft++;
+void Player::addAbility(vector<shared_ptr<Ability>> abilityList){
+    Abilities = abilityList;
+    int size = abilityList.size();
+    abilitiesLeft = size;
 }
 
 bool Player::operator!=(shared_ptr<Player> other){
