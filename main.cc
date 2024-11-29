@@ -25,7 +25,7 @@
 #include <random>
 using namespace std;
 
-void setupAbility(shared_ptr<Player> player, string abilities){
+bool setupAbility(shared_ptr<Player> player, string abilities){
     // Helper to initialize Abilities
     for (int x = 0; x < 5; ++x){
         if(abilities[x] == 'F'){
@@ -52,17 +52,29 @@ void setupAbility(shared_ptr<Player> player, string abilities){
         }else if(abilities[x] == 'B'){
             shared_ptr<Ability> ability= make_shared<BattleGod>("Battle God", x, player);
             player->addAbility(ability);
+        }else{
+            cerr << "Cannot setup player abilities, using default..." << endl;
+            return false;
         }
     }
+    return true;
 }
 
-void setupLinks(shared_ptr<Player> player, string File, char index){
+bool setupLinks(shared_ptr<Player> player, string File, char index){
     // Helper to initialize Links
     ifstream f{File};
+    if (!f.is_open()) { // If file not accessible
+        cerr << "File not accessible. Please enter a valid file!" << endl;
+        return false;
+    }
     string token;
     bool isData = false;
 
     while(f >> token){
+        if(token.size() != 2){
+            cerr << "Cannot setup provided Link Order, randomizing Links..." << endl;
+            return false;
+        }
         if(token[0] == 'd' || token[0] == 'D'){
             isData = true;
         }
@@ -71,6 +83,7 @@ void setupLinks(shared_ptr<Player> player, string File, char index){
         player->addLink(link);
         index++;
     }
+    return true;
 }
 
 void randomizeLinks(shared_ptr<Player> player, char index, vector<string>& links) {
@@ -93,6 +106,10 @@ void randomizeLinks(shared_ptr<Player> player, char index, vector<string>& links
 
 void readfromfile(shared_ptr<GameState> game, string file){
     ifstream f{file};
+    if (!f.is_open()) { // If file not accessible
+        cerr << "File not accessible. Please enter a valid file!" << endl;
+        return;
+    }
     string command;
     while(f >> command){
         if(command == "quit"){
@@ -144,7 +161,7 @@ int main(int argc, char* args[]) {
     // Initializing Players and GameState
     shared_ptr<Player> P1 = make_shared<Player>("Player 1");
     shared_ptr<Player> P2 = make_shared<Player>("Player 2");
-    int x = 0;
+    int x = 1;
 
     // Flags for Initalizing GameState
     bool setGraphics = false;
@@ -160,35 +177,39 @@ int main(int argc, char* args[]) {
         string arg = args[x];
         if(arg == "-link1"){
             // Add Order for Link for Player 1
-            Link1order = true;
             x++;
             arg = args[x];
-            setupLinks(P1, arg, ascii);
+            if(setupLinks(P1, arg, ascii)){
+                Link1order = true;
+            }
         }else if(arg == "-link2"){
             // Add Order for Link for Player 2
-            Link2order = true;
             x++;
             arg = args[x];
             ascii = 'A';
-            setupLinks(P2, arg, ascii);
+            if (setupLinks(P2, arg, ascii)){
+                Link2order = true;
+            }
         }else if(arg == "-player2"){
-            // Setting Player 1 as the viewer 
+            // Setting Player 2 as the viewer 
             view_player2 = true;
         } else if(arg == "-graphics" ){
             // Enabling Graphical Observer
             setGraphics = true;
         }else if(arg == "-ability1"){
             // Adding Abilities for Player 1
-            Ability1 = true;
             x++;
             arg = args[x];
-            setupAbility(P1, arg);
+            if (setupAbility(P1, arg)){
+                Ability1 = true;
+            }
         }else if(arg == "-ability2"){
             // Adding Abilities for Player 2
-            Ability1 = true;
             x++;
             arg = args[x];
-            setupAbility(P2, arg);
+            if (setupAbility(P2, arg)){
+                Ability2 = true;
+            }
         }
         x++;
     }
@@ -258,7 +279,7 @@ int main(int argc, char* args[]) {
                 game->ExecuteAbility(id, cin);
             } 
         }else if (command == "board"){
-            // Print Board
+            // Prints Board
             game->notifyObservers();
         }else if(command == "abilities"){
             // Print All Abilities
@@ -266,19 +287,22 @@ int main(int argc, char* args[]) {
             for(int x = 0; x < 5; ++x){
                 cout << "ID: " << x << ", " ;
                 cout << "Ability: " <<  abilities[x]->getName();
-                if(abilities[x]->isUsed()){
+                if(abilities[x]->isUsed()){ // Lets user know which Abilities used
                     cout << " ( Used )" << endl;
                 }else {
                     cout << endl;
                 }
             }
         }else if(command == "sequence"){
+            // read input from file
             string file;
             cin >> file;
             readfromfile(game, file);
         }
+        // check if Game is over or not
         game->HasWon();
         if(game->isGameOver()){
+            // Outputs winner
             cout << "Game Over!, " << game->GetWinner()->getName() << " wins!" << endl;
             break;
         } 
