@@ -22,7 +22,7 @@ bool RussianRoulette::execute(std::shared_ptr<GameState> game) {
     int randomIndex = dist(gen);           
     auto chosenPlayer = players[randomIndex];   
 
-    std::cout << "THE ROULETTE HAS CHOOSE PLAYER " << randomIndex + 1 << " AS ITS VICTIM" << std::endl;
+    std::cout << "THE ROULETTE HAS CHOSEN PLAYER " << randomIndex + 1 << " AS ITS VICTIM" << std::endl;
 
     chosenPlayer->downloadLink(targetLink);  
     board->removeLink(targetLink->getPos());

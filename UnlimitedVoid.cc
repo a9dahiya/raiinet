@@ -16,7 +16,7 @@ bool UnlimitedVoid::execute(shared_ptr<GameState> game) {
     setUsed();  
 
     
-    cout << "Throughout Heaven and Earth, Link " << result->getLetter()  << " alone is the Honoured One" << std::endl;
+    cout << "Through Heaven and Earth, Link " << result->getLetter()  << " alone is the Honoured One" << std::endl;
     return true;
 }
 
