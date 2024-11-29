@@ -150,10 +150,12 @@ void GameState::moveLink(char linkId, const string& Dir){
 void GameState::ExecuteAbility(int AbilityId, istream& in){
     if(AbilityId > 4 || AbilityId < 0){
         cerr << "Please enter a valid Ability Id";
+        return;
     }
     if(isAbilityUsed()){
         // Ability already used in turn
         cerr << "Cannot use another Ability" << endl;
+        return;
     }else{
         shared_ptr<Player> player = GetCurrentPlayer();
         vector<shared_ptr<Ability>> abilities = player->getAbilities();
