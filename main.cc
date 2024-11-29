@@ -298,6 +298,8 @@ int main(int argc, char* args[]) {
             string file;
             cin >> file;
             readfromfile(game, file);
+        }else{
+            cerr << "Invalid Command" << endl;
         }
         // check if Game is over or not
         game->HasWon();
