@@ -9,6 +9,14 @@
 using namespace std;
 
 
+// Initializes the game board (constructor)
+// - Creates a 2D grid of cells.
+// - Assigns server ports to players based on their roles.
+// - Positions links for each player near their server ports.
+// Inputs:
+//   - std::vector<std::shared_ptr<Player>> players: List of players in the game.
+// Outputs: Initializes the board with all components set up.
+// Time Complexity: O(height * width + players.size() * width)
 Board::Board(std::vector<std::shared_ptr<Player>> players)
     : board(height, std::vector<std::shared_ptr<Cell>>(width, nullptr)) 
 {
@@ -97,6 +105,10 @@ Board::Board(std::vector<std::shared_ptr<Player>> players)
     }
 }
 
+// Checks if a cell at a given position contains an opponent's link.
+// Inputs: Position pos: The position to check,  std::shared_ptr<Player> player: The current player.
+// Outputs: Returns true if the cell contains an opponent's link; otherwise, false.
+// Time Complexity: O(1)
 bool Board::hasOppLink(Position pos, std::shared_ptr<Player> player) {
    
     shared_ptr<Cell> cell = board[pos.getRow()][pos.getCol()];
@@ -104,7 +116,12 @@ bool Board::hasOppLink(Position pos, std::shared_ptr<Player> player) {
     return cell->getLink() && !player->isOwnLink(cell->getLink());
 }
 
-std::shared_ptr<Link> Board::tatake(std::shared_ptr<Link> attacker, std::shared_ptr<Link> defender) {
+
+// Resolves a battle between two links (attacker and defender).
+// Inputs:std::shared_ptr<Link> attacker: The attacking link, std::shared_ptr<Link> defender: The defending link.
+// Outputs: Returns the winning link after the battle.
+// Time Complexity: O(1)
+std::shared_ptr<Link> Board::tatakae(std::shared_ptr<Link> attacker, std::shared_ptr<Link> defender) {
     attacker->setRevealed();
     defender->setRevealed();
 
@@ -143,7 +160,14 @@ std::shared_ptr<Link> Board::tatake(std::shared_ptr<Link> attacker, std::shared_
     return winner;
 }
 
-
+// Moves a link from one cell to another.
+// Inputs:
+//   - std::shared_ptr<Link> link: The link to move.
+//   - Position from: The starting position of the link.
+//   - Position to: The destination position.
+//   - std::shared_ptr<GameState> game: Current game state.
+// Outputs: Moves the link and handles special conditions like firewalls and server ports.
+// Time Complexity: O(1) per move, additional checks included.
 void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, shared_ptr<GameState> game) {
     if (!link) return;
 
@@ -176,7 +200,7 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
             cellFrom->removeLink();
         }else if( hasOppLink(to, game->GetCurrentPlayer()) ){
             shared_ptr<Link> defender = cellTo->getLink();
-            shared_ptr<Link> winner = tatake(link, defender);
+            shared_ptr<Link> winner = tatakae(link, defender);
             cellFrom->removeLink();
             cellTo->setLink(winner);
             winner->setPos(to);
@@ -187,7 +211,7 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
         }
     }else if(hasOppLink(to, game->GetCurrentPlayer()) ){
         shared_ptr<Link> defender = cellTo->getLink();
-        shared_ptr<Link> winner = tatake(link, defender);
+        shared_ptr<Link> winner = tatakae(link, defender);
         cellFrom->removeLink();
         cellTo->setLink(winner);
         winner->setPos(to);
@@ -199,6 +223,10 @@ void Board::moveLink(std::shared_ptr<Link> link, Position from, Position to, sha
 
 }
 
+// Retrieves a cell at a specific position.
+// Inputs: Position pos: The position of the cell to retrieve.
+// Outputs: Returns the cell at the given position or nullptr if out of bounds.
+// Time Complexity: O(1)
 shared_ptr<Cell> Board::getCell(Position pos) const {
     if (pos.getRow() < 0 || pos.getRow() >= height || pos.getCol() < 0 || pos.getCol() >= width) {
         cerr << "Error: Position (" << pos.getRow() << ", " << pos.getCol() << ") is out of bounds.\n";
@@ -208,7 +236,10 @@ shared_ptr<Cell> Board::getCell(Position pos) const {
 }
 
 
-
+// Removes a link from a cell at a specific position.
+// Inputs: Position pos: The position of the link to remove.
+// Outputs: Removes the link from the specified cell.
+// Time Complexity: O(1)
 void Board::removeLink(Position pos) {
     auto cell = getCell(pos);
     if (cell->getLink()) {
@@ -218,14 +249,24 @@ void Board::removeLink(Position pos) {
     }
 }
 
+// Gets the height of the board.
+// Outputs: Returns the height of the board.
+// Time Complexity: O(1)
 int Board::getHeight() const {
     return height;
 }
 
+// Gets the width of the board.
+// Outputs: Returns the width of the board.
+// Time Complexity: O(1)
 int Board::getWidth() const {
     return width;
 }
 
+// Checks if a position is off the edge of the board for a given player.
+// Inputs: Position pos: The position to check, std::shared_ptr<Player> player: The current player.
+// Outputs: Returns true if the position is off the edge; otherwise, false.
+// Time Complexity: O(1)
 bool Board::offEdge(Position pos, std::shared_ptr<Player> player) {
     int row = pos.getRow();
 
@@ -240,7 +281,10 @@ bool Board::offEdge(Position pos, std::shared_ptr<Player> player) {
 
 
 
-
+// Checks if a position belongs to the opponent's server port.
+// Inputs: Position pos: The position to check, std::shared_ptr<Player> player: The current player.
+// Outputs: Returns true if the position is an opponent's server port else false.
+// Time Complexity: O(1)
 bool Board::isOppServer(Position pos, std::shared_ptr<Player> player) {
     for (const auto& serverPort : serverPorts) {
         if (pos == serverPort && !player->isOwnServerPort(pos)) {
@@ -250,6 +294,11 @@ bool Board::isOppServer(Position pos, std::shared_ptr<Player> player) {
     return false;
 }
 
+// Validates a move from one position to another for a given player.
+// Inputs: Position from: The starting position, Position to: The destination position, 
+// std::shared_ptr<Player> player: The current player.
+// Outputs: Returns true if the move is valid; otherwise, false.
+// Time Complexity: O(1)
 bool Board::ValidMove(Position from, Position to, std::shared_ptr<Player> player) { // Have to check this properly
     if (to.getCol() < 0 || to.getCol() >= width) {
         return false;
@@ -279,6 +328,8 @@ bool Board::ValidMove(Position from, Position to, std::shared_ptr<Player> player
     return true;
 }
 
+// Overloads the output stream operator to print the board's current state.
+// Time Complexity: O(height * width)
 std::ostream& operator<<(std::ostream& out, const Board& board) {
     // Print top border
     out << "========\n";
