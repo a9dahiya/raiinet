@@ -89,16 +89,14 @@ bool setupLinks(shared_ptr<Player> player, string File, char index){
     string token;
     bool isData = false;
     vector<shared_ptr<Link>> player_links;
-    while(f >> token){
-        if(token.size() != 2){
+    while(f >> token) {
+        if(token[0] != 'D' && token[0] != 'd' && token[0] != 'V' && token[0] && 'v'){
+            cout << token[0] << endl;
             cerr << "Cannot setup provided Link Order, randomizing Links..." << endl;
             return false;
         }
-        if(token[0] != 'D' || token[0] != 'd' || token[0] != 'V' || token[0] != 'v'){
-            cerr << "Cannot setup provided Link Order, randomizing Links..." << endl;
-            return false;
-        }
-        if(token[1] != '1' || token[1] != '2' || token[1] != '3' || token[1] != '4'){
+        if(token[1] != '1' && token[1] != '2' && token[1] != '3' && token[1] != '4'){
+            cout << token[1] << endl;
             cerr << "Cannot setup provided Link Order, randomizing Links..." << endl;
             return false;
         }
@@ -109,7 +107,7 @@ bool setupLinks(shared_ptr<Player> player, string File, char index){
         player_links.emplace_back(make_shared<Link>(player, index, token, isData, strength));
         index++;
     }  
-    if(player_links.size() != 8) return false;
+    // if(player_links.size() != 8) return false;
     player->addLink(player_links);
     return true;
 }
